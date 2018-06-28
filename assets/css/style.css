@@ -1,3 +1,11 @@
-body {
-    background-color: #060CE9
+.container {
+    background-color: #060CE9;
+    color: white;
+    font-size: 16pt;
+}
+.row {
+    padding: 30px;
+}
+.col-md-2 {
+    border: 1px solid white;
 }
