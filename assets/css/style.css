@@ -1,0 +1,65 @@
+#main{
+    margin-top: 25px;
+}
+
+.container {
+
+    color: white;
+    font-size: 16pt;
+    padding: 0px;
+}
+#questions {
+background-color: #060CE9;
+margin-bottom: 9px;
+}
+.col-md-2 {
+    border: 1px solid black;
+    height: 80px;
+    text-align: center;
+    padding-top: 23px;
+    font-size: 22pt;
+    
+}
+#dollars{
+    color:yellow;
+    font-weight: bold;
+    background-color: #060CE9;
+}
+body{
+    background-color: black;
+}
+#score{
+    height:160px;
+    margin-top: 10px;
+    background-color: #060CE9;
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    border: 1px white solid;
+}
+.card-header{
+    background-color: black;
+    border: 3px solid silver;
+}
+#scoreBot{
+    margin-top:10px;
+    margin-left: 50px;
+    height:160px;
+    font-family: 'Roboto Mono', monospace;
+}
+#scoreBotBody1, #scoreBotBody2, #contName {
+    background-color: #060CE9;
+    text-align: center;
+    font-family: 'Gochi Hand', cursive;
+    font-size: 34px;
+    overflow: auto;
+    
+}
+#botHeader1, #botHeader2, #contScore{
+    text-align: right;
+    color: #FEE29F;
+    font-size: 25px;
+}
+#mula{
+    float: left;
+}
+
