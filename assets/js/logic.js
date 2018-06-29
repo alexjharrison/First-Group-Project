@@ -10,10 +10,9 @@ var categories = {
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
 ////////////////////////////////////////////////
-var pickRandomItem = function(inputArray) {
-    for (var i=0;i<inputArray.length;i++) {
 
-    }
+var pickRandomItem = function(inputArray) {
+    return Math.floor(Math.random() * inputArray);
 }
 
 
