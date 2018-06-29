@@ -18,6 +18,9 @@
 
 <body>
     <div class="container" id="main">
+        <div class="row">
+            <div id="instructions">Instructions</div>
+        </div>
         <div class="container">
             <div class="row" id="questions">
                 <div class="col-md-2" id="category-1">Sports</div>
@@ -30,68 +33,68 @@
         </div>
         <div class="container" id="dollars">
             <div class="row" id="200">
-                <div class="col-md-2" id="category-1">$200</div>
-                <div class="col-md-2" id="category-2">$200</div>
-                <div class="col-md-2" id="category-3">$200</div>
-                <div class="col-md-2" id="category-4">$200</div>
-                <div class="col-md-2" id="category-5">$200</div>
-                <div class="col-md-2" id="category-6">$200</div>
+                <div class="col-md-2 question" id="category-1-200">$200</div>
+                <div class="col-md-2 question" id="category-2-200">$200</div>
+                <div class="col-md-2 question" id="category-3-200">$200</div>
+                <div class="col-md-2 question" id="category-4-200">$200</div>
+                <div class="col-md-2 question" id="category-5-200">$200</div>
+                <div class="col-md-2 question" id="category-6-200">$200</div>
             </div>
             <div class="row" id="400">
-                <div class="col-md-2" id="category-1">$400</div>
-                <div class="col-md-2" id="category-2">$400</div>
-                <div class="col-md-2" id="category-3">$400</div>
-                <div class="col-md-2" id="category-4">$400</div>
-                <div class="col-md-2" id="category-5">$400</div>
-                <div class="col-md-2" id="category-6">$400</div>
+                <div class="col-md-2 question" id="category-1-400">$400</div>
+                <div class="col-md-2 question" id="category-2-400">$400</div>
+                <div class="col-md-2 question" id="category-3-400">$400</div>
+                <div class="col-md-2 question" id="category-4-400">$400</div>
+                <div class="col-md-2 question" id="category-5-400">$400</div>
+                <div class="col-md-2 question" id="category-6-400">$400</div>
             </div>
             <div class="row" id="600">
-                <div class="col-md-2" id="category-1">$600</div>
-                <div class="col-md-2" id="category-2">$600</div>
-                <div class="col-md-2" id="category-3">$600</div>
-                <div class="col-md-2" id="category-4">$600</div>
-                <div class="col-md-2" id="category-5">$600</div>
-                <div class="col-md-2" id="category-6">$600</div>
+                <div class="col-md-2 question" id="category-1-600">$600</div>
+                <div class="col-md-2 question" id="category-2-600">$600</div>
+                <div class="col-md-2 question" id="category-3-600">$600</div>
+                <div class="col-md-2 question" id="category-4-600">$600</div>
+                <div class="col-md-2 question" id="category-5-600">$600</div>
+                <div class="col-md-2 question" id="category-6-600">$600</div>
             </div>
             <div class="row" id="800">
-                <div class="col-md-2" id="category-1">$800</div>
-                <div class="col-md-2" id="category-2">$800</div>
-                <div class="col-md-2" id="category-3">$800</div>
-                <div class="col-md-2" id="category-4">$800</div>
-                <div class="col-md-2" id="category-5">$800</div>
-                <div class="col-md-2" id="category-6">$800</div>
+                <div class="col-md-2 question" id="category-1-800">$800</div>
+                <div class="col-md-2 question" id="category-2-800">$800</div>
+                <div class="col-md-2 question" id="category-3-800">$800</div>
+                <div class="col-md-2 question" id="category-4-800">$800</div>
+                <div class="col-md-2 question" id="category-5-800">$800</div>
+                <div class="col-md-2 question" id="category-6-800">$800</div>
             </div>
             <div class="row" id="1000">
-                <div class="col-md-2" id="category-1">$1000</div>
-                <div class="col-md-2" id="category-2">$1000</div>
-                <div class="col-md-2" id="category-3">$1000</div>
-                <div class="col-md-2" id="category-4">$1000</div>
-                <div class="col-md-2" id="category-5">$1000</div>
-                <div class="col-md-2" id="category-6">$1000</div>
+                <div class="col-md-2 question" id="category-1-1000">$1000</div>
+                <div class="col-md-2 question" id="category-2-1000">$1000</div>
+                <div class="col-md-2 question" id="category-3-1000">$1000</div>
+                <div class="col-md-2 question" id="category-4-1000">$1000</div>
+                <div class="col-md-2 question" id="category-5-1000">$1000</div>
+                <div class="col-md-2 question" id="category-6-1000">$1000</div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-4">
                 <div class="card text-white mb-3" style="max-width: 18rem;" id="score">
-                    <div class="card-header" id="contScore"><div id="mula">$</div>Cont Score</div>
+                    <div class="card-header"><div id="mula">$</div><div id="contScore">0</div></div>
                     <div class="card-body">
-                        <p class="card-text" id="contName">Cont name</p>
+                        <p class="card-text" id="contName"></p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="card text-white mb-3" style="max-width: 18rem;" id="scoreBot">
-                    <div class="card-header" id="botHeader1"><div id="mula">$</div>Bot Score</div>
-                    <div class="card-body" id="scoreBotBody1">
-                        <p class="card-text">Bot name</p>
+                    <div class="card-header"><div id="mula">$</div><div id="botScore1">0</div></div>
+                    <div class="card-body" id="botBody1">
+                        <p class="card-text" id="botName1">Watson</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="card text-white mb-3" style="max-width: 18rem;" id="scoreBot">
-                    <div class="card-header" id="botHeader2"><div id="mula">$</div>Bot Score</div>
-                    <div class="card-body" id="scoreBotBody2">
-                        <p class="card-text">Bot name</p>
+                    <div class="card-header"><div id="mula">$</div><div id="botScore2">0</div></div>
+                    <div class="card-body" id="botBody2">
+                        <p class="card-text" id="botName2">Crick</p>
                     </div>
                 </div>
             </div>

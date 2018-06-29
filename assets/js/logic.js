@@ -25,6 +25,12 @@ var requestQuestions = function (){
 
 
 
+var pickRandomItem = function(inputArray) {
+    return Math.floor(Math.random() * inputArray);
+}
+
+
+
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
