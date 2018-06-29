@@ -11,6 +11,17 @@ var categories = {
 /////////// Reusable Functions /////////////////
 ////////////////////////////////////////////////
 
+var requestQuestions = function (){
+
+    //TODO: neeed add min_date
+   var queryUrl = "http://jservice.io/api/clues?category=" + categoryId + "min_date=" + "offset"
+   
+    $.ajax (function(){
+        url: queryUrl
+        method: "GET"
+
+    })
+}
 
 
 
