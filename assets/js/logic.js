@@ -11,6 +11,9 @@ var categories = {
 /////////// Reusable Functions /////////////////
 ////////////////////////////////////////////////
 
+var pickRandomItem = function(inputArray) {
+    return Math.floor(Math.random() * inputArray);
+}
 
 
 
