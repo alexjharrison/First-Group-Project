@@ -52,10 +52,13 @@ var loadQuestionsFromJService = function () {
                 method: "GET"
             }).then(function (response) {
                 var randomQ = Math.floor(Math.random()*response.length);
-                var newQ = response[randomQ].question;
+                try {
+                    var newQ = response[randomQ].question;
+                }
                 //if empty questions or bad response start over
-                if(!newQ) {
+                catch{
                     loadQuestionsFromJService();
+                    console.log("bad one");
                     return;
                 }
                 apiCallCounter++;
@@ -69,7 +72,7 @@ var loadQuestionsFromJService = function () {
                     catAnswers = [];
                 }
                 if (apiCallCounter===30) {
-                    console.log(questions,answers);
+                    console.log(categories,questions,answers);
                     ////////////////////////////////
                     //function() to run after questions load here
                     ////////////////////////////////
