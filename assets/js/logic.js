@@ -45,20 +45,23 @@ var loadQuestionsFromJService = function () {
         var catAnswers = [];
         var catWrongAnswers = [];
         for (var j= 0; j<5;j++) {
+            console.log(i,j);
             var queryUrl = "http://jservice.io/api/clues/?value=" + points[j] + "&category=" + indexList[i]// + '&max_date="2005-01-01T12:00:00.000Z"';
             $.ajax({
                 url: queryUrl,
                 method: "GET"
             }).then(function (response) {
-                apiCallCounter++;
                 var randomQ = Math.floor(Math.random()*response.length);
                 var newQ = response[randomQ].question;
+                //if empty questions or bad response start over
+                if(!newQ) {
+                    loadQuestionsFromJService();
+                    return;
+                }
+                apiCallCounter++;
                 var newA = response[randomQ].answer;
                 catQuestions.push(newQ);
                 catAnswers.push(newA);
-                if(newQ===undefined) {
-                    console.log("badone");
-                }
                 if(catQuestions.length===5) {
                     questions.push(catQuestions);
                     answers.push(catAnswers);
@@ -67,6 +70,9 @@ var loadQuestionsFromJService = function () {
                 }
                 if (apiCallCounter===30) {
                     console.log(questions,answers);
+                    ////////////////////////////////
+                    //function() to run after questions load here
+                    ////////////////////////////////
                 }
             })
         }
