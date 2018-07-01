@@ -6,9 +6,9 @@ var allCategories = {
     name: ["Potpourriiii", "Stupid Answers", "Sports", "American History", "Animals", "3 Letter Words", "Science", "Transportation", "U.S. Cities", "People", "Television", "Hodgepodge", "State Capitals", "History", "The Bible", "Business & Industry", "U.S. Geography", "Annual Events", "Common Bonds", "Food", "Rhyme Time", "Word Origins", "Pop Music"],
     id: [306, 136, 42, 780, 21, 105, 25, 130, 7, 442, 67, 227, 109, 114, 31, 176, 582, 1114, 508, 49, 561, 223, 770]
 }
-var points = [200, 400, 600, 800, 1000];
+var points = [100, 200, 300, 400, 500];
 
-var categories, questions, answers, wrongAnswers;
+var categories, questions, answers, wrongAnswers, apiCounter;
 
 
 ////////////////////////////////////////////////
@@ -19,9 +19,10 @@ var categories, questions, answers, wrongAnswers;
 var loadQuestionsFromJService = function () {
     // clear variables from last game
     categories = [];
-    questions = [];
-    answers = [];
+    questions = [[], [], [], [], [], []];
+    answers = [[], [], [], [], [], []];
     wrongAnswers = [];
+    apiCounter = 0;
 
     //fill categories array until 6 decided for game
     var indexList = [];
@@ -30,64 +31,51 @@ var loadQuestionsFromJService = function () {
         var randomInt = Math.floor(Math.random() * allCategories.name.length);
         var newCategory = allCategories.name[randomInt];
         var newCatID = allCategories.id[randomInt];
-        
+
         //do not add to category list if repeat
         if (!categories.includes(newCategory)) {
             categories.push(newCategory);
             indexList.push(newCatID);
         }
     }
-    var apiCallCounter = 0;
-    var startOver = false;
-    //i represents each category
+
+    //run through each category
     for (var i = 0; i < 6; i++) {
-        //j represents each points value
-        var catQuestions = [];
-        var catAnswers = [];
-        var catWrongAnswers = [];
-        for (var j= 0; j<5;j++) {
-            var queryUrl = "http://jservice.io/api/clues/?value=" + points[j] + "&category=" + indexList[i]// + '&max_date="2005-01-01T12:00:00.000Z"';
-            $.ajax({
-                url: queryUrl,
-                method: "GET"
-            }).then(function (response) {
-                var randomQ = Math.floor(Math.random()*response.length);
-                var newQ = "";
-                var newA = "";
-                try {
-                    newQ = response[randomQ].question;
-                    newA = response[randomQ].answer;
-                }
-                //if empty questions or bad response start over
-                catch{
-                    startOver = true;
-                    console.log("bad one");
-                }
-                apiCallCounter++;
-                catQuestions.push(newQ);
-                catAnswers.push(newA);
-                if(catQuestions.length===5) {
-                    questions.push(catQuestions);
-                    answers.push(catAnswers);
-                    catQuestions = [];
-                    catAnswers = [];
-                }
-                if (apiCallCounter===30) {
-                    console.log(categories,questions,answers);
-                    if (startOver) {
-                        loadQuestionsFromJService();
-                        return;
-                    }
-                    ////////////////////////////////
-                    //function() to run after questions load here
-                    ////////////////////////////////
-                }
-            })
+        //run through each point value
+        for (var j = 0; j < 5; j++) {
+            apiCaller(i, j, indexList[i]);
         }
     }
 }
 
-    
+var apiCaller = function (i, j, catId) {
+    var queryUrl = "http://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
+    $.ajax({
+        url: queryUrl,
+        method: "GET"
+    }).then(function (response) {
+        if (response.length === 0) {
+            alert("too short");
+            return;
+        }
+        var randomInt = Math.floor(Math.random() * response.length);
+        var newQ = response[randomInt].question;
+        var newA = response[randomInt].answer;
+        questions[i][j] = newQ;
+        answers[i][j] = newA;
+        apiCounter++;
+        if (apiCounter === 30) {
+            console.log(categories, questions, answers)
+            if(questions.includes("=")||answers.includes("=")) {
+                loadQuestionsFromJService();
+            }
+            //check and end
+        }
+
+    })
+}
+
+
 
 
 
