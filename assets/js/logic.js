@@ -69,15 +69,11 @@ var apiCaller = function (i, j, catId) {
             if(questions.includes("=")||answers.includes("=")) {
                 loadQuestionsFromJService();
             }
-            //check and end
+            //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
         }
 
     })
 }
-
-
-
-
 
 
 
