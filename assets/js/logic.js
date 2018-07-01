@@ -38,6 +38,7 @@ var loadQuestionsFromJService = function () {
         }
     }
     var apiCallCounter = 0;
+    var startOver = false;
     //i represents each category
     for (var i = 0; i < 6; i++) {
         //j represents each points value
@@ -45,24 +46,24 @@ var loadQuestionsFromJService = function () {
         var catAnswers = [];
         var catWrongAnswers = [];
         for (var j= 0; j<5;j++) {
-            console.log(i,j);
             var queryUrl = "http://jservice.io/api/clues/?value=" + points[j] + "&category=" + indexList[i]// + '&max_date="2005-01-01T12:00:00.000Z"';
             $.ajax({
                 url: queryUrl,
                 method: "GET"
             }).then(function (response) {
                 var randomQ = Math.floor(Math.random()*response.length);
+                var newQ = "";
+                var newA = "";
                 try {
-                    var newQ = response[randomQ].question;
+                    newQ = response[randomQ].question;
+                    newA = response[randomQ].answer;
                 }
                 //if empty questions or bad response start over
                 catch{
-                    loadQuestionsFromJService();
+                    startOver = true;
                     console.log("bad one");
-                    return;
                 }
                 apiCallCounter++;
-                var newA = response[randomQ].answer;
                 catQuestions.push(newQ);
                 catAnswers.push(newA);
                 if(catQuestions.length===5) {
@@ -73,6 +74,10 @@ var loadQuestionsFromJService = function () {
                 }
                 if (apiCallCounter===30) {
                     console.log(categories,questions,answers);
+                    if (startOver) {
+                        loadQuestionsFromJService();
+                        return;
+                    }
                     ////////////////////////////////
                     //function() to run after questions load here
                     ////////////////////////////////
