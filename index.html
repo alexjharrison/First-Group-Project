@@ -13,6 +13,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css?family=Gochi+Hand|Roboto+Mono');
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
 
@@ -76,7 +77,10 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="card text-white mb-3" style="max-width: 18rem;" id="score">
-                    <div class="card-header"><div id="mula">$</div><div id="contScore">0</div></div>
+                    <div class="card-header">
+                        <div id="mula">$</div>
+                        <div id="contScore">0</div>
+                    </div>
                     <div class="card-body">
                         <p class="card-text" id="contName"></p>
                     </div>
@@ -84,7 +88,10 @@
             </div>
             <div class="col-sm-4">
                 <div class="card text-white mb-3" style="max-width: 18rem;" id="scoreBot">
-                    <div class="card-header"><div id="mula">$</div><div id="botScore1">0</div></div>
+                    <div class="card-header">
+                        <div id="mula">$</div>
+                        <div id="botScore1">0</div>
+                    </div>
                     <div class="card-body" id="botBody1">
                         <p class="card-text" id="botName1">Watson</p>
                     </div>
@@ -92,12 +99,22 @@
             </div>
             <div class="col-sm-4">
                 <div class="card text-white mb-3" style="max-width: 18rem;" id="scoreBot">
-                    <div class="card-header"><div id="mula">$</div><div id="botScore2">0</div></div>
+                    <div class="card-header">
+                        <div id="mula">$</div>
+                        <div id="botScore2">0</div>
+                    </div>
                     <div class="card-body" id="botBody2">
                         <p class="card-text" id="botName2">Crick</p>
                     </div>
                 </div>
             </div>
+        </div>
+        <!--this will be dynamically generated-->
+        <div class="container">
+        <div id="questionBoard">Who won the superbowl MVP in superbowl 48 between the Seattle Seahawks and the Denver Broncos?
+                <input type="text" id="answerText"><input type="submit">
+        </div>
+    
         </div>
 
        
@@ -106,7 +123,6 @@
 <!-- 
      linking to external javascript file -->
      <script src="assets/js/logic.js"></script>
-
 
 </body>
 

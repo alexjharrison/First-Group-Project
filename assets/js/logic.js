@@ -26,7 +26,7 @@ var requestQuestions = function (){
 
 
 var pickRandomItem = function(inputArray) {
-    return Math.floor(Math.random() * inputArray);
+    return inputArray[Math.floor(Math.random() * inputArray.length)];
 }
 
 
