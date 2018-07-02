@@ -54,7 +54,7 @@ var loadQuestionsFromJService = function () {
 }
 
 var apiCaller = function (i, j, catId) {
-    var queryUrl = "http://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
+    var queryUrl = "https://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
     $.ajax({
         url: queryUrl,
         method: "GET"
@@ -123,11 +123,12 @@ $(document).on("submit", "#enter-answer", function () {
 $(".question").click(function () {
     var thisID = $(this).attr("id");
     thisID = thisID.split("-");
-    currentQuestion = questions[thisID[1]-1][points.indexOf(parseInt(thisID[2]))];
+    currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     console.log(currentQuestion);
-    currentAnswer = answers[thisID[1]-1][points.indexOf(parseInt(thisID[2]))];
+    currentAnswer = answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     console.log(currentAnswer);
     acceptBuzzer = true;
+    
 });
 
 
