@@ -70,11 +70,17 @@ var apiCaller = function (i, j, catId) {
                 loadQuestionsFromJService();
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
+            populateCategories();
         }
 
     })
 }
 
+var populateCategories = function() {
+    for(var i=0;i<categories.length; i++) {
+        $("#category-" + (i+1)).html(categories[i]);
+    }
+}
 
 
 
