@@ -85,6 +85,15 @@ var populateCategories = function() {
 
 
 
+var snd = function (nameOfSong){
+
+    var timeUp = new Audio("../sounds/" + nameOfSong + ".mp3");
+    snd.play();
+};
+
+
+
+
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
