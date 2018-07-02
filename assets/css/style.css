@@ -101,3 +101,15 @@ body{
     padding-top: 5px;
 
 }
+#title {
+    margin-bottom: -205px;
+    margin-top:-190px;
+}
+#dynamic{
+    text-align: center;
+    background-color: #060CE9;
+    font-family: 'Times New Roman', Times, serif;
+}
+#firstScreen{
+    border: 2px yellow solid;
+}

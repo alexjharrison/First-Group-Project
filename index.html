@@ -110,16 +110,32 @@
             </div>
         </div>
         <!--this will be dynamically generated-->
-        <div class="container">
-        <div id="questionBoard">Who won the superbowl MVP in superbowl 48 between the Seattle Seahawks and the Denver Broncos?
-                <input type="text" id="answerText"><input type="submit">
+        <div class="container" id="dynamic">
+            <div id="questionBoard">Who won the superbowl MVP in superbowl 48 between the Seattle Seahawks and the Denver Broncos?
+                <input type="text" id="answerText">
+                <input type="submit">
+                <audio id="speech"></audio>
+            </div>
+            <div id="firstScreen">
+                <img id="title" src="assets/jeopardy.png" alt="Jeopardy!">
+                <br>
+                <h1>Please enter your name</h1>
+                <br>
+                <input type="text" id="nameBox">
+                <br>
+                <br>
+            </div>
         </div>
-        <div id="finalJeopardy"><div id="wager">Final Jeopardy!<br><br><div id="finalJeopardyCategory">Category:</div><br>How much do you want to wager?<br>
-            <input type="text">
-        </div></div>
-        </div>
-        
-        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+
+        <!-- linking jquery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+        <!-- linking to external javascript file -->
+        <script src="assets/js/logic.js"></script>
+
 </body>
 
 </html>
