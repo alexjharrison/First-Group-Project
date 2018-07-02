@@ -69,9 +69,8 @@ body{
 #questionBoard{
     position: fixed;
     top: 120px;
-    left: 86px;
     height:400px;
-    width:1141px;
+    width: 100%;
     background-color: #060CE9;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color:white;
