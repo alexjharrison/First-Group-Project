@@ -102,8 +102,8 @@ body{
 
 }
 #title {
-    margin-bottom: -205px;
-    margin-top:-190px;
+ margin-top:-25px;
+ margin-bottom: -25px;
 }
 #dynamic{
     text-align: center;
