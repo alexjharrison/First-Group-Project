@@ -69,16 +69,36 @@ var apiCaller = function (i, j, catId) {
                 loadQuestionsFromJService();
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
-        }
+            populateCategories();
+            animateQuestion();
+        } 
     })
 }
-// Creates a blue box that we will be able to fill with relevant questions
+// On selected question click a blue box that we will be able to fill with relevant questions
 function animateQuestion() {
     $("#dollars").click(function(){
-    displayQuestions = $("#dollars").html("<div id='answerBoard'>")
+    displayQuestions = $("#dollars").html("<div id='questionBoard'>")
+    for(var i=0;i<questions.length; i++) {
+        $("#questionBoard" + (i+1)).html(questions[i]);
+    }
     });
+    acceptBuzzer = true;
   };
-animateQuestion ()
+
+var populateCategories = function() {
+    for(var i=0;i<categories.length; i++) {
+        $("#category-" + (i+1)).html(categories[i]);
+    }
+}
+
+var snd = function (nameOfSong){
+
+    var timeUp = new Audio("../sounds/" + nameOfSong + ".mp3");
+    snd.play();
+};
+
+
+
 
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
