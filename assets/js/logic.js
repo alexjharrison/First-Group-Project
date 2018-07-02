@@ -110,6 +110,10 @@ function askName () {
     })
 }
 
+var readQuestion = function() {
+
+}
+
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
@@ -135,11 +139,10 @@ $(document).on("click",".question",function () {
     currentAnswer = answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     console.log(currentAnswer);
     acceptBuzzer = true;
-    var newDiv = $("<div>").attr({
-        "id":"questionBoard"
-    }).addClass("main-area");
-    newDiv.append("<p>").attr("id","currentQuestion").text(currentQuestion);
-    newDiv.html($(".main-area"));
+    var newDiv = $("<div>").attr("id","questionBoard");
+    newDiv.append($("<p>").attr("id","currentQuestion").text(currentQuestion));
+    $("body").prepend(newDiv);
+    newDiv.slideDown(750, "swing", readQuestion);
 });
 
 ////////////////////////////////////////////////
@@ -148,4 +151,3 @@ $(document).on("click",".question",function () {
 
 askName ();
 loadQuestionsFromJService();
-drawBoard();
