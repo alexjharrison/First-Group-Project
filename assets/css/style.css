@@ -91,3 +91,25 @@ body{
     text-align: center;
     padding-top: 125px;
 }
+#finalJeopardy{
+    height:365px;
+    width:720px;
+    background-color: #060CE9;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding-top: 5px;
+
+}
+#title {
+    margin-bottom: -205px;
+    margin-top:-190px;
+}
+#dynamic{
+    text-align: center;
+    background-color: #060CE9;
+    font-family: 'Times New Roman', Times, serif;
+}
+#firstScreen{
+    border: 2px yellow solid;
+}
