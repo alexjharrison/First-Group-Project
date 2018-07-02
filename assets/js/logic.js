@@ -9,6 +9,11 @@ var allCategories = {
 var points = [100, 200, 300, 400, 500];
 
 var categories, questions, answers, wrongAnswers, apiCounter;
+var userName;
+var scores = [];
+var acceptBuzzer = false;
+var currentQuestion = "";
+var currentAnswer = "";
 
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
@@ -21,6 +26,7 @@ var loadQuestionsFromJService = function () {
     questions = [[], [], [], [], [], []];
     answers = [[], [], [], [], [], []];
     wrongAnswers = [];
+    scores = [0, 0, 0];
     apiCounter = 0;
 
     //fill categories array until 6 decided for game
@@ -65,33 +71,30 @@ var apiCaller = function (i, j, catId) {
         apiCounter++;
         if (apiCounter === 30) {
             console.log(categories, questions, answers)
-            if(questions.includes("=")||answers.includes("=")) {
+            if (questions.includes("=") || answers.includes("=")) {
                 loadQuestionsFromJService();
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
             populateCategories();
-            animateQuestion();
-        } 
+
+        }
+
     })
 }
-// On selected question click a blue box that we will be able to fill with relevant questions
-function animateQuestion() {
-    $("#dollars").click(function(){
-    displayQuestions = $("#dollars").html("<div id='questionBoard'>")
-    for(var i=0;i<questions.length; i++) {
-        $("#questionBoard" + (i+1)).html(questions[i]);
-    }
-    });
-    acceptBuzzer = true;
-  };
 
-var populateCategories = function() {
-    for(var i=0;i<categories.length; i++) {
-        $("#category-" + (i+1)).html(categories[i]);
+
+var populateCategories = function () {
+    for (var i = 0; i < categories.length; i++) {
+        $("#category-" + (i + 1)).html(categories[i]);
     }
 }
 
-var snd = function (nameOfSong){
+var getUserName = function () {
+
+}
+
+
+var snd = function (nameOfSong) {
 
     var timeUp = new Audio("../sounds/" + nameOfSong + ".mp3");
     snd.play();
@@ -104,9 +107,32 @@ var snd = function (nameOfSong){
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
 
+while (acceptBuzzer) {
+    document.body.onkeypress = function (e) {
+        if (e.keyCode == 32) {
+        }
+    }
+    acceptBuzzer = false;
+}
+
+$(document).on("submit", "#enter-answer", function () {
+    alert("submitted");
+})
+
+// On selected question click a blue box that we will be able to fill with relevant questions
+$(".question").click(function () {
+    var thisID = $(this).attr("id");
+    thisID = thisID.split("-");
+    currentQuestion = questions[thisID[1]-1][points.indexOf(parseInt(thisID[2]))];
+    console.log(currentQuestion);
+    currentAnswer = answers[thisID[1]-1][points.indexOf(parseInt(thisID[2]))];
+    console.log(currentAnswer);
+    acceptBuzzer = true;
+});
+
 
 ////////////////////////////////////////////////
 ////////////// Program Start ///////////////////
 ////////////////////////////////////////////////
-
+getUserName();
 loadQuestionsFromJService();
