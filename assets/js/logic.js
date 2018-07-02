@@ -10,7 +10,6 @@ var points = [100, 200, 300, 400, 500];
 
 var categories, questions, answers, wrongAnswers, apiCounter;
 
-
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
 ////////////////////////////////////////////////
@@ -71,19 +70,19 @@ var apiCaller = function (i, j, catId) {
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
         }
-
     })
 }
-
-
-
-
+// Creates a blue box that we will be able to fill with relevant questions
+function animateQuestion() {
+    $("#dollars").click(function(){
+    displayQuestions = $("#dollars").html("<div id='answerBoard'>")
+    });
+  };
+animateQuestion ()
 
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
-
-
 
 
 ////////////////////////////////////////////////
