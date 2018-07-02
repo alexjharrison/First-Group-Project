@@ -76,7 +76,6 @@ var apiCaller = function (i, j, catId) {
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
             populateCategories();
-            askName ();
         }
 
     })
@@ -87,10 +86,6 @@ var populateCategories = function () {
     for (var i = 0; i < categories.length; i++) {
         $("#category-" + (i + 1)).html(categories[i]);
     }
-}
-
-var getUserName = function () {
-
 }
 
 
@@ -132,7 +127,7 @@ $(document).on("submit", "#enter-answer", function () {
 })
 
 // On selected question click a blue box that we will be able to fill with relevant questions
-$(".question").click(function () {
+$(document).on("click",".question",function () {
     var thisID = $(this).attr("id");
     thisID = thisID.split("-");
     currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
@@ -140,11 +135,17 @@ $(".question").click(function () {
     currentAnswer = answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     console.log(currentAnswer);
     acceptBuzzer = true;
-    
+    var newDiv = $("<div>").attr({
+        "id":"questionBoard"
+    }).addClass("main-area");
+    newDiv.append("<p>").attr("id","currentQuestion").text(currentQuestion);
+    // newDiv.html($(".main-area"));
 });
 
 ////////////////////////////////////////////////
 ////////////// Program Start ///////////////////
 ////////////////////////////////////////////////
-getUserName();
+
+askName ();
 loadQuestionsFromJService();
+drawBoard();
