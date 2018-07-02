@@ -9,6 +9,7 @@ var allCategories = {
 var points = [100, 200, 300, 400, 500];
 
 var categories, questions, answers, wrongAnswers, apiCounter;
+var userName;
 
 
 ////////////////////////////////////////////////
@@ -71,6 +72,7 @@ var apiCaller = function (i, j, catId) {
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
             populateCategories();
+
         }
 
     })
@@ -80,6 +82,10 @@ var populateCategories = function() {
     for(var i=0;i<categories.length; i++) {
         $("#category-" + (i+1)).html(categories[i]);
     }
+}
+
+var getUserName = function() {
+    
 }
 
 
@@ -104,5 +110,5 @@ var snd = function (nameOfSong){
 ////////////////////////////////////////////////
 ////////////// Program Start ///////////////////
 ////////////////////////////////////////////////
-
+getUserName();
 loadQuestionsFromJService();
