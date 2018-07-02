@@ -79,6 +79,15 @@ var apiCaller = function (i, j, catId) {
 
 
 
+var snd = function (nameOfSong){
+
+    var timeUp = new Audio("../sounds/" + nameOfSong + ".mp3");
+    snd.play();
+};
+
+
+
+
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
