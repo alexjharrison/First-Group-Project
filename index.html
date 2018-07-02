@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Jeopardy Game!</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 
     <style>
         @import url('https://fonts.googleapis.com/css?family=Gochi+Hand|Roboto+Mono');
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
 
@@ -33,6 +38,14 @@
             </div>
         </div>
         <div class="container" id="dollars">
+            <div class="row" id="100">
+                <div class="col-md-2 question" id="category-1-100">$100</div>
+                <div class="col-md-2 question" id="category-2-100">$100</div>
+                <div class="col-md-2 question" id="category-3-100">$100</div>
+                <div class="col-md-2 question" id="category-4-100">$100</div>
+                <div class="col-md-2 question" id="category-5-100">$100</div>
+                <div class="col-md-2 question" id="category-6-100">$100</div>
+            </div>
             <div class="row" id="200">
                 <div class="col-md-2 question" id="category-1-200">$200</div>
                 <div class="col-md-2 question" id="category-2-200">$200</div>
@@ -41,37 +54,29 @@
                 <div class="col-md-2 question" id="category-5-200">$200</div>
                 <div class="col-md-2 question" id="category-6-200">$200</div>
             </div>
-            <div class="row" id="400">
-                <div class="col-md-2 question" id="category-1-400">$400</div>
-                <div class="col-md-2 question" id="category-2-400">$400</div>
-                <div class="col-md-2 question" id="category-3-400">$400</div>
-                <div class="col-md-2 question" id="category-4-400">$400</div>
-                <div class="col-md-2 question" id="category-5-400">$400</div>
-                <div class="col-md-2 question" id="category-6-400">$400</div>
+            <div class="row" id="300">
+                <div class="col-md-2 question" id="category-1-300">$300</div>
+                <div class="col-md-2 question" id="category-2-300">$300</div>
+                <div class="col-md-2 question" id="category-3-300">$300</div>
+                <div class="col-md-2 question" id="category-4-300">$300</div>
+                <div class="col-md-2 question" id="category-5-300">$300</div>
+                <div class="col-md-2 question" id="category-6-300">$300</div>
             </div>
-            <div class="row" id="600">
-                <div class="col-md-2 question" id="category-1-600">$600</div>
-                <div class="col-md-2 question" id="category-2-600">$600</div>
-                <div class="col-md-2 question" id="category-3-600">$600</div>
-                <div class="col-md-2 question" id="category-4-600">$600</div>
-                <div class="col-md-2 question" id="category-5-600">$600</div>
-                <div class="col-md-2 question" id="category-6-600">$600</div>
+            <div class="row" id="200">
+                <div class="col-md-2 question" id="category-1-200">$200</div>
+                <div class="col-md-2 question" id="category-2-200">$200</div>
+                <div class="col-md-2 question" id="category-3-200">$200</div>
+                <div class="col-md-2 question" id="category-4-200">$200</div>
+                <div class="col-md-2 question" id="category-5-200">$200</div>
+                <div class="col-md-2 question" id="category-6-200">$200</div>
             </div>
-            <div class="row" id="800">
-                <div class="col-md-2 question" id="category-1-800">$800</div>
-                <div class="col-md-2 question" id="category-2-800">$800</div>
-                <div class="col-md-2 question" id="category-3-800">$800</div>
-                <div class="col-md-2 question" id="category-4-800">$800</div>
-                <div class="col-md-2 question" id="category-5-800">$800</div>
-                <div class="col-md-2 question" id="category-6-800">$800</div>
-            </div>
-            <div class="row" id="1000">
-                <div class="col-md-2 question" id="category-1-1000">$1000</div>
-                <div class="col-md-2 question" id="category-2-1000">$1000</div>
-                <div class="col-md-2 question" id="category-3-1000">$1000</div>
-                <div class="col-md-2 question" id="category-4-1000">$1000</div>
-                <div class="col-md-2 question" id="category-5-1000">$1000</div>
-                <div class="col-md-2 question" id="category-6-1000">$1000</div>
+            <div class="row" id="500">
+                <div class="col-md-2 question" id="category-1-500">$500</div>
+                <div class="col-md-2 question" id="category-2-500">$500</div>
+                <div class="col-md-2 question" id="category-3-500">$500</div>
+                <div class="col-md-2 question" id="category-4-500">$500</div>
+                <div class="col-md-2 question" id="category-5-500">$500</div>
+                <div class="col-md-2 question" id="category-6-500">$500</div>
             </div>
         </div>
         <div class="row">
@@ -126,11 +131,6 @@
                 <br>
             </div>
         </div>
-    </div>
-
-        <!-- linking jquery -->
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
 
         <!-- linking to external javascript file -->
         <script src="assets/js/logic.js"></script>
