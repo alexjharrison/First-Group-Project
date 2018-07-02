@@ -139,7 +139,7 @@ $(document).on("click",".question",function () {
         "id":"questionBoard"
     }).addClass("main-area");
     newDiv.append("<p>").attr("id","currentQuestion").text(currentQuestion);
-    // newDiv.html($(".main-area"));
+    newDiv.html($(".main-area"));
 });
 
 ////////////////////////////////////////////////
