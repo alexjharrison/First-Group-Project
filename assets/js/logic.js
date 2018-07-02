@@ -10,6 +10,10 @@ var points = [100, 200, 300, 400, 500];
 
 var categories, questions, answers, wrongAnswers, apiCounter;
 var userName;
+var scores = [];
+var acceptBuzzer = false;
+var currentQuestion = "";
+var currentAnswer = "";
 
 
 ////////////////////////////////////////////////
@@ -23,6 +27,7 @@ var loadQuestionsFromJService = function () {
     questions = [[], [], [], [], [], []];
     answers = [[], [], [], [], [], []];
     wrongAnswers = [];
+    scores = [0, 0, 0];
     apiCounter = 0;
 
     //fill categories array until 6 decided for game
@@ -67,7 +72,7 @@ var apiCaller = function (i, j, catId) {
         apiCounter++;
         if (apiCounter === 30) {
             console.log(categories, questions, answers)
-            if(questions.includes("=")||answers.includes("=")) {
+            if (questions.includes("=") || answers.includes("=")) {
                 loadQuestionsFromJService();
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
@@ -78,20 +83,18 @@ var apiCaller = function (i, j, catId) {
     })
 }
 
-var populateCategories = function() {
-    for(var i=0;i<categories.length; i++) {
-        $("#category-" + (i+1)).html(categories[i]);
+var populateCategories = function () {
+    for (var i = 0; i < categories.length; i++) {
+        $("#category-" + (i + 1)).html(categories[i]);
     }
 }
 
-var getUserName = function() {
-    
+var getUserName = function () {
+
 }
 
 
-
-
-var snd = function (nameOfSong){
+var snd = function (nameOfSong) {
 
     var timeUp = new Audio("../sounds/" + nameOfSong + ".mp3");
     snd.play();
@@ -104,6 +107,17 @@ var snd = function (nameOfSong){
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
 
+while (acceptBuzzer) {
+    document.body.onkeypress = function (e) {
+        if (e.keyCode == 32) {
+        }
+    }
+    acceptBuzzer = false;
+}
+
+$(document).on("submit", "#enter-answer", function () {
+    alert("submitted");
+})
 
 
 
