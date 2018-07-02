@@ -76,7 +76,7 @@ var apiCaller = function (i, j, catId) {
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
             populateCategories();
-
+            askName ();
         }
 
     })
@@ -100,8 +100,20 @@ var snd = function (nameOfSong) {
     snd.play();
 };
 
-
-
+function askName () {
+    $("#main").prepend("<div id='firstScreen'>")
+    var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
+    var text = $("<p>Enter your name to begin</p>")
+    var form = ("<input type='text' id='nameBox'>")
+    var submit = ("<input type='submit' id='submitButton'>")
+    $("#firstScreen").append(img, text, form, submit)
+    $("#submitButton").on("click", function (){
+        var enteredName = $('#nameBox').val();
+        console.log(enteredName);
+        $("#firstScreen").hide();
+        $("#contName").text(enteredName);
+    })
+}
 
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
@@ -130,7 +142,6 @@ $(".question").click(function () {
     acceptBuzzer = true;
     
 });
-
 
 ////////////////////////////////////////////////
 ////////////// Program Start ///////////////////
