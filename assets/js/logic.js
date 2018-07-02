@@ -15,7 +15,6 @@ var acceptBuzzer = false;
 var currentQuestion = "";
 var currentAnswer = "";
 
-
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
 ////////////////////////////////////////////////
@@ -77,11 +76,26 @@ var apiCaller = function (i, j, catId) {
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
             populateCategories();
+<<<<<<< HEAD
 
         }
 
+=======
+            animateQuestion();
+        } 
+>>>>>>> master
     })
 }
+// On selected question click a blue box that we will be able to fill with relevant questions
+function animateQuestion() {
+    $("#dollars").click(function(){
+    displayQuestions = $("#dollars").html("<div id='questionBoard'>")
+    for(var i=0;i<questions.length; i++) {
+        $("#questionBoard" + (i+1)).html(questions[i]);
+    }
+    });
+    acceptBuzzer = true;
+  };
 
 var populateCategories = function () {
     for (var i = 0; i < categories.length; i++) {
@@ -89,12 +103,16 @@ var populateCategories = function () {
     }
 }
 
+<<<<<<< HEAD
 var getUserName = function () {
 
 }
 
 
 var snd = function (nameOfSong) {
+=======
+var snd = function (nameOfSong){
+>>>>>>> master
 
     var timeUp = new Audio("../sounds/" + nameOfSong + ".mp3");
     snd.play();
@@ -118,8 +136,6 @@ while (acceptBuzzer) {
 $(document).on("submit", "#enter-answer", function () {
     alert("submitted");
 })
-
-
 
 ////////////////////////////////////////////////
 ////////////// Program Start ///////////////////

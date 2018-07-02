@@ -5,18 +5,17 @@
 
 #instructions{
     text-align: center;
-margin: auto;
+    margin: auto;
 }
 
 .container {
-
     color: white;
     font-size: 16pt;
     padding: 0px;
 }
 #questions {
-background-color: #060CE9;
-margin-bottom: 9px;
+    background-color: #060CE9;
+    margin-bottom: 9px;
 }
 .col-md-2 {
     border: 1px solid black;
@@ -70,7 +69,7 @@ body{
 }
 #questionBoard{
     height:365px;
-    width:720px;
+    width:520px;
     background-color: #060CE9;
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-shadow: 2px 2px 2px black;
@@ -85,7 +84,7 @@ body{
 
 #answerBoard{
     height:365px;
-    width:720px;
+    width:520px;
     background-color: #060CE9;
     margin: 0 0 10px 190px;
     text-align: center;
