@@ -70,20 +70,10 @@ var apiCaller = function (i, j, catId) {
             }
             //PUT FUNCTION HERE TO DO WHEN QUESTIONS ARE LOADED
             populateCategories();
-            animateQuestion();
+            askName()
         } 
     })
 }
-// On selected question click a blue box that we will be able to fill with relevant questions
-function animateQuestion() {
-    $("#dollars").click(function(){
-    displayQuestions = $("#dollars").html("<div id='questionBoard'>")
-    for(var i=0;i<questions.length; i++) {
-        $("#questionBoard" + (i+1)).html(questions[i]);
-    }
-    });
-    acceptBuzzer = true;
-  };
 
 var populateCategories = function() {
     for(var i=0;i<categories.length; i++) {
@@ -92,18 +82,27 @@ var populateCategories = function() {
 }
 
 var snd = function (nameOfSong){
-
     var timeUp = new Audio("../sounds/" + nameOfSong + ".mp3");
     snd.play();
 };
 
-
-
-
+function askName () {
+    $("#dollars").html("<div id='firstScreen'>")
+    var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
+    var text = $("<p id='nameBox'>Enter your name to begin</p>")
+    var form = ("<input type='text' id='nameBox'>")
+    var submit = ("<input type='submit' id='nameBox'>")
+    $("#firstScreen").append(img, text, form, submit)
+}
+$("#contName").text(true)
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
-
+// On selected question click a blue box that we will be able to fill with relevant questions
+$("#dollars").click(function(){
+    displayQuestions = $("#dollars").html("<div id='questionBoard'>")
+    acceptBuzzer = true;
+    });
 
 ////////////////////////////////////////////////
 ////////////// Program Start ///////////////////

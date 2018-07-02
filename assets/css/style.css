@@ -22,13 +22,14 @@
     height: 80px;
     text-align: center;
     padding-top: 23px;
-    font-size: 22pt;
+    font-size: 14pt;
     
 }
 #dollars{
     color:yellow;
     font-weight: bold;
     background-color: #060CE9;
+    font-size: 24pt;
 }
 body{
     background-color: black;
@@ -62,8 +63,6 @@ body{
     overflow: auto;
     
 }
-
-
 #mula{
     float: left;
 }
@@ -111,4 +110,10 @@ body{
 }
 #firstScreen{
     border: 2px yellow solid;
+    background-color: #060CE9;
+    margin-top: auto;
+}
+#nameBox {
+    align: center;
+    margin: auto;
 }
