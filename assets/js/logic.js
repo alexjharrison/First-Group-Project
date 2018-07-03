@@ -49,7 +49,6 @@ var loadQuestionsFromJService = function () {
             indexList.push(newCatID);
         }
     }
-
     //run through each category
     for (var i = 0; i < 6; i++) {
         //run through each point value
@@ -60,7 +59,7 @@ var loadQuestionsFromJService = function () {
 }
 
 var apiCaller = function (i, j, catId) {
-    var queryUrl = "http://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
+    var queryUrl = "https://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
     $.ajax({
         url: queryUrl,
         method: "GET"
@@ -99,13 +98,10 @@ var populateCategories = function () {
 
 
 var snd = function (nameOfSong) {
-
-    var timeUp = new Audio("../sounds/" + nameOfSong + ".mp3");
-    snd.play();
+    $("#effects").attr("src", "assets/sounds/"+nameOfSong+".mp3").get(0).play();
 };
 
 function askName() {
-
     newDiv = $("<div>").attr("id", "nameBoard");
     var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'><br><br>");
     var text = $("<p>Enter your name to begin</p>")
@@ -118,6 +114,7 @@ function askName() {
     $("#nameBox").focus();
     $("#nameForm").submit(function (e) {
         e.preventDefault();
+        snd("filling_board");
         var enteredName = $("#nameBox").val();
         newDiv.slideUp(500);
         newDiv.remove();
@@ -131,14 +128,15 @@ function speakLine(text) {
 
     var url = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + text + "&tl=en&client=tw-ob"
 
-    $("audio").attr("src", url).get(0).play();
+    $("#speech").attr("src", url).get(0).play();
 
 }
 
 function finalJeopardy() {
     $.ajax({
         method: "GET",
-        url: "http://jservice.io/api/random?count=1"
+        // url: "https://cors-anywhere.herokuapp.com/jservice.io/api/random?count=1"
+        url: "https://jservice.io/api/random?count=1"
     }).then(function (response) {
         var newDiv = $("<div>").attr("id", "questionBoard");
         newDiv.append($("<p>").text("Final Jeopardy"));
@@ -268,7 +266,7 @@ $(".question").click(function () {
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
-
+            snd("times_up");
             newDiv.empty();
             newDiv.append($("<p>").attr("id", "currentQuestion").html(currentQuestion));
             newDiv.append($("<p>").attr("id", "currentAnswer").html("Answer: " + currentAnswer));
