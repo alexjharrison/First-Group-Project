@@ -72,6 +72,11 @@ var apiCaller = function (i, j, catId) {
         var randomInt = Math.floor(Math.random() * response.length);
         var newQ = response[randomInt].question;
         var newA = response[randomInt].answer;
+        //add this to the bot answering function---------------------------------------------------------------
+        var botRand = Math.floor(Math.random()*response.length);
+        var botWrongAnswer=response[botRand].answer;
+        console.log(botWrongAnswer)
+        //------------------------------------------------------------------------------------------------------
         questions[i][j] = newQ;
         answers[i][j] = newA;
         apiCounter++;
