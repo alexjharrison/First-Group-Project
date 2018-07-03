@@ -14,6 +14,7 @@ var scores = [];
 var acceptBuzzer = false;
 var currentQuestion = "";
 var currentAnswer = "";
+var guessedAnswer = "";
 
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
@@ -142,7 +143,7 @@ $(document).on("submit", "#enter-answer", function () {
 // On selected question click a blue box that we will be able to fill with relevant questions
 $(".question").click(function () {
     var thisID = $(this).attr("id");
-    $(this).text = "";
+    $(this).text("");
     thisID = thisID.split("-");
     currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     if (currentQuestion === "") { return; }
