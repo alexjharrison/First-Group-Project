@@ -163,7 +163,7 @@ $(".question").click(function () {
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
-            newDiv.slideUp(750, "swing", function(){
+            newDiv.slideUp(750, "swing", function () {
                 newDiv.remove();
                 clearInterval(interval);
                 $(document).off();
@@ -176,7 +176,7 @@ $(".question").click(function () {
             clearInterval(interval);
             counterText.remove();
             $("#instruction").text("Type Your Answer");
-            var newForm = $("<form>").attr("id","answerForm");
+            var newForm = $("<form>").attr("id", "answerForm");
             newForm.append($("<input type='text' id='answerBox'>"))
             newForm.append($("<input type='submit' id='answerButton'>"))
             newDiv.append(newForm);
@@ -189,6 +189,7 @@ $(".question").click(function () {
                     $("#score .card-header").removeClass("buzzed");
                 });
                 console.log(guessedAnswer);
+                console.log(answer());
             })
         }
         acceptBuzzer = false;
