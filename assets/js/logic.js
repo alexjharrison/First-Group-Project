@@ -118,13 +118,6 @@ var readQuestion = function() {
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
 
-while (acceptBuzzer) {
-    document.body.onkeypress = function (e) {
-        if (e.keyCode == 32) {
-        }
-    }
-    acceptBuzzer = false;
-}
 
 $(document).on("submit", "#enter-answer", function () {
     alert("submitted");
@@ -143,7 +136,23 @@ $(document).on("click",".question",function () {
     newDiv.append($("<p>").attr("id","currentQuestion").text(currentQuestion));
     $("body").prepend(newDiv);
     newDiv.slideDown(750, "swing", readQuestion);
+
+    while (acceptBuzzer) {
+        document.body.onkeypress = function (e) {
+            if (e.keyCode == 32) {
+                newDiv.append($("<input type='text' id='answerBox'>"))
+                newDiv.append($("<input type='submit' id='answerButton'>"))
+                $("#answerButton").on("click", function (){
+                    var guessedAnswer = $('#answerBox').val();
+                    newDiv.hide();
+                    console.log(guessedAnswer);
+                })
+            }
+        }
+        acceptBuzzer = false;
+    }
 });
+
 
 ////////////////////////////////////////////////
 ////////////// Program Start ///////////////////
