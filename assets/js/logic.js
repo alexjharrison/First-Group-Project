@@ -97,15 +97,25 @@ var snd = function (nameOfSong) {
 };
 
 function askName() {
+    //put #firstScreen at the top of #main
     $("#main").prepend("<div id='firstScreen'>")
+    //create an img element with an id title and a source of the jeopardy picture, store it in var img
     var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
+    //create a p element and store it in the var text
     var text = $("<p>Enter your name to begin</p>")
+    //create a textbox and store it in var form
     var form = ("<input type='text' id='nameBox'>")
+    //create a submit button and store it in var submit
     var submit = ("<input type='submit' id='submitButton'>")
+    //when the user clicks #firstscreen tack all of those elements underneath #firstScreen, in the #main div
     $("#firstScreen").append(img, text, form, submit)
+    //when user clicks the submit button...
     $("#submitButton").on("click", function () {
+        //create a variable called entered, and set its value to whatever the user types in in the textbox that we just made (#nameBox) 
         var enteredName = $('#nameBox').val();
+        //log that
         console.log(enteredName);
+        //hide 
         $("#firstScreen").hide();
         $("#contName").text(enteredName);
     })
