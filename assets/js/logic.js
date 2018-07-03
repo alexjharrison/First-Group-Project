@@ -134,6 +134,23 @@ function speakLine(text) {
 
 }
 
+function finalJeopardy() {
+    $.ajax({
+        method: "GET",
+        url: "http://jservice.io/api/random?count=1"
+    }).then(function(response) {
+        console.log(response);
+        var newDiv = $("<div>").attr("id","questionBoard");
+        newDiv.append($("<p>").text("Final Jeopardy"));
+        newDiv.append($("<p>").html("Category: "+response[0].category.title))
+        var newForm = $("<form>").attr("id","finalForm");
+        newForm.append($("<input type='text' id='finalText'>"));
+        newForm.append($("<input type='submit' id='finalButton' name='enter wager'>"));
+        newDiv.append(newForm);
+    })
+    console.log("final jeopardy");
+}
+
 
 
 
