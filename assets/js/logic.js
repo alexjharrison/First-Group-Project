@@ -202,15 +202,6 @@ function finalJeopardy() {
     })
 }
 
-function checkIfCorrect(guess, rightAns) {
-    if (guess == rightAns){
-        return true;
-    }
-    else {
-        return false;
-    }
-} 
-
 
 
 
