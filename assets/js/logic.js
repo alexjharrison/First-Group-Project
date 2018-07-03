@@ -99,7 +99,7 @@ var snd = function (nameOfSong) {
 
 function askName() {
     newDiv = $("<div>").attr("id", "nameBoard");
-    var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
+    var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'><br><br>");
     var text = $("<p>Enter your name to begin</p>")
     var newForm = $("<form>").attr("id", "nameForm");
     newForm.append($("<input type='text' id='nameBox'>"))
