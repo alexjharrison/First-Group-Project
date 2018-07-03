@@ -148,7 +148,10 @@ function finalJeopardy() {
         newDiv.append($("<p>").text("Final Jeopardy"));
         newDiv.append($("<p>").html("Category: " + response[0].category.title))
         var newForm = $("<form>").attr("id", "finalForm");
-        newForm.append($("<input type='text' id='finalText'>"));
+        newForm.append($("<input>").attr({
+            "type":'text',
+            "id":'finalText'
+        }));
         newForm.append($("<input>").attr({
             "id": "answerButton",
             "type": "submit"
@@ -158,8 +161,9 @@ function finalJeopardy() {
         newDiv.slideDown(500);
         $("#finalForm").submit(function (e) {
             e.preventDefault();
+            thisScore = parseInt($("#finalText").val());
             newDiv.empty();
-            thisScore = $("#finalText").val();
+            console.log(thisScore);
             currentQuestion = response[0].question;
             currentAnswer = response[0].answer;
             newDiv.append($("<p>").html("Category: " + response[0].category.title))
@@ -172,7 +176,8 @@ function finalJeopardy() {
             }).val("Answer"));
             newDiv.append(newForm);
             $("#finalForm").off();
-            $("#finalForm").submit(function (e) {
+            $("#finalFinalForm").submit(function (e2) {
+                e2.preventDefault();
                 newDiv.empty();
                 if (checkIfCorrect($("#finalFinalText").val(), currentAnswer)) {
                     //correct response
