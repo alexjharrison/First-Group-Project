@@ -121,3 +121,7 @@ body{
     align: center;
     margin: auto;
 }
+
+.buzzed {
+    border: 3px solid red;
+}

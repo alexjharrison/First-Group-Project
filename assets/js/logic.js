@@ -28,6 +28,7 @@ var loadQuestionsFromJService = function () {
     wrongAnswers = [];
     scores = [0, 0, 0];
     apiCounter = 0;
+    $("#instruction").text("Click a Box to Get Question");
 
     //fill categories array until 6 decided for game
     var indexList = [];
@@ -54,7 +55,7 @@ var loadQuestionsFromJService = function () {
 }
 
 var apiCaller = function (i, j, catId) {
-    var queryUrl = "https://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
+    var queryUrl = "http://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
     $.ajax({
         url: queryUrl,
         method: "GET"
@@ -95,14 +96,14 @@ var snd = function (nameOfSong) {
     snd.play();
 };
 
-function askName () {
+function askName() {
     $("#main").prepend("<div id='firstScreen'>")
     var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
     var text = $("<p>Enter your name to begin</p>")
     var form = ("<input type='text' id='nameBox'>")
     var submit = ("<input type='submit' id='submitButton'>")
     $("#firstScreen").append(img, text, form, submit)
-    $("#submitButton").on("click", function (){
+    $("#submitButton").on("click", function () {
         var enteredName = $('#nameBox').val();
         console.log(enteredName);
         $("#firstScreen").hide();
@@ -110,7 +111,7 @@ function askName () {
     })
 }
 
-var readQuestion = function() {
+var readQuestion = function () {
 
 }
 
@@ -124,33 +125,62 @@ $(document).on("submit", "#enter-answer", function () {
 })
 
 // On selected question click a blue box that we will be able to fill with relevant questions
-$(document).on("click",".question",function () {
+$(".question").click(function () {
     var thisID = $(this).attr("id");
+    $(this).text = "";
     thisID = thisID.split("-");
     currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
+    if (currentQuestion === "") { return; }
+    $("#instruction").text("Press Space Bar to Buzz In");
+    questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
     console.log(currentQuestion);
     currentAnswer = answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
+    answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
     console.log(currentAnswer);
     acceptBuzzer = true;
-    var newDiv = $("<div>").attr("id","questionBoard");
-    newDiv.append($("<p>").attr("id","currentQuestion").text(currentQuestion));
+    var newDiv = $("<div>").attr("id", "questionBoard");
+    newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
     $("body").prepend(newDiv);
     newDiv.slideDown(750, "swing", readQuestion);
+    var counter = 10;
+    var counterText = $("<p>").text(counter);
+    newDiv.append(counterText);
+    var interval = setInterval(function () {
+        counterText.text(--counter);
+        if (counter === 0) {
+            newDiv.slideUp(750, "swing", function(){
+                newDiv.remove();
+                clearInterval(interval);
+                $(document).off();
+            })
+        }
+    }, 1000)
 
-    while (acceptBuzzer) {
-        document.body.onkeypress = function (e) {
-            if (e.keyCode == 32) {
-                newDiv.append($("<input type='text' id='answerBox'>"))
-                newDiv.append($("<input type='submit' id='answerButton'>"))
-                $("#answerButton").on("click", function (){
-                    var guessedAnswer = $('#answerBox').val();
-                    newDiv.hide();
-                    console.log(guessedAnswer);
-                })
-            }
+    $(document).keypress(function (e) {
+        if (e.keyCode == 32 && acceptBuzzer) {
+            clearInterval(interval);
+            counterText.remove();
+            $("#instruction").text("Type Your Answer");
+            var newForm = $("<form>").attr("id","answerForm");
+            newForm.append($("<input type='text' id='answerBox'>"))
+            newForm.append($("<input type='submit' id='answerButton'>"))
+            newDiv.append(newForm);
+            $("#score .card-header").addClass("buzzed");
+            $("#answerForm").submit(function (event) {
+                event.preventDefault();
+                var guessedAnswer = $('#answerBox').val();
+                newDiv.slideUp(750, "swing", function () {
+                    newDiv.remove()
+                    $("#score .card-header").removeClass("buzzed");
+                });
+                console.log(guessedAnswer);
+            })
         }
         acceptBuzzer = false;
-    }
+        $(document).off();
+    });
+
+
 });
 
 
@@ -158,5 +188,5 @@ $(document).on("click",".question",function () {
 ////////////// Program Start ///////////////////
 ////////////////////////////////////////////////
 
-askName ();
+askName();
 loadQuestionsFromJService();
