@@ -98,17 +98,23 @@ var snd = function (nameOfSong) {
 };
 
 function askName() {
-    $("#main").prepend("<div id='firstScreen'>")
+    newDiv = $("<div>").attr("id", "nameBoard");
     var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
     var text = $("<p>Enter your name to begin</p>")
-    var form = ("<input type='text' id='nameBox'>")
-    var submit = ("<input type='submit' id='submitButton'>")
-    $("#firstScreen").append(img, text, form, submit)
-    $("#submitButton").on("click", function () {
-        var enteredName = $('#nameBox').val();
+    var newForm = $("<form>").attr("id", "nameForm");
+    newForm.append($("<input type='text' id='nameBox'>"))
+    newForm.append($("<input type='submit' id='nameButton'>"))
+    newDiv.append(img,text,newForm);
+    $("body").append(newDiv);
+    newDiv.slideDown(500);
+    $("#nameForm").submit( function (e) {
+        e.preventDefault();
+        var enteredName = $("#nameBox").val();
         console.log(enteredName);
-        $("#firstScreen").hide();
+        newDiv.slideUp(500);
+        newDiv.remove();
         $("#contName").text(enteredName);
+        $(document).off();
     })
 }
 
@@ -136,9 +142,7 @@ function speakLine(text) {
 ////////////////////////////////////////////////
 
 
-$(document).on("submit", "#enter-answer", function () {
-    alert("submitted");
-})
+
 
 // On selected question click a blue box that we will be able to fill with relevant questions
 $(".question").click(function () {
@@ -164,7 +168,7 @@ $(".question").click(function () {
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
-            newDiv.slideUp(750, "swing", function(){
+            newDiv.slideUp(750, "swing", function () {
                 newDiv.remove();
                 clearInterval(interval);
                 $(document).off();
@@ -177,7 +181,7 @@ $(".question").click(function () {
             clearInterval(interval);
             counterText.remove();
             $("#instruction").text("Type Your Answer");
-            var newForm = $("<form>").attr("id","answerForm");
+            var newForm = $("<form>").attr("id", "answerForm");
             newForm.append($("<input type='text' id='answerBox'>"))
             newForm.append($("<input type='submit' id='answerButton'>"))
             newDiv.append(newForm);
