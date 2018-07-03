@@ -15,6 +15,7 @@ var acceptBuzzer = false;
 var currentQuestion = "";
 var currentAnswer = "";
 var guessedAnswer = "";
+var questionsSeen = 0;
 
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
@@ -134,6 +135,22 @@ function speakLine(text) {
 
 }
 
+var finalJeopardy = new function() {
+    $.ajax({
+        method: "GET",
+        queryUrl: "http://jservice.io/api/random?count=1"
+    }).then(function(response) {
+        var newDiv = $("<div>").attr("id","questionBoard");
+        newDiv.append($("<p>").text("Final Jeopardy"));
+        newDiv.append($("<p>").html("Category: "+response[0].category.title))
+        var newForm = $("<form>").attr("id","finalForm");
+        newForm.append($("<input type='text' id='finalText'>"));
+        newForm.append($("<input type='submit' id='finalButton' name='enter wager'>"));
+        newDiv.append(newForm);
+    })
+    
+}
+
 
 
 
@@ -146,6 +163,7 @@ function speakLine(text) {
 
 // On selected question click a blue box that we will be able to fill with relevant questions
 $(".question").click(function () {
+    questionsSeen++;
     var thisID = $(this).attr("id");
     $(this).text("");
     thisID = thisID.split("-");
@@ -199,7 +217,9 @@ $(".question").click(function () {
         acceptBuzzer = false;
         $(document).off();
     });
-
+    if(questionsSeen===30) {
+        finalJeopardy();
+    }
 
 });
 
