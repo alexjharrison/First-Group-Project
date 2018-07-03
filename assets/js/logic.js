@@ -171,11 +171,11 @@ function finalJeopardy() {
             $("#finalForm").off();
             $("#finalForm").submit(function (e) {
                 newDiv.empty();
-                if(checkIfCorrect($("#finalFinalText").val(),currentAnswer)) {
+                if (checkIfCorrect($("#finalFinalText").val(), currentAnswer)) {
 
                 }
                 else {
-                    
+
                 }
             })
         })
@@ -198,75 +198,97 @@ function checkIfCorrect(guess, rightAns) {
 
 // On selected question click a blue box that we will be able to fill with relevant questions
 $(".question").click(function () {
-            questionsSeen++;
-            var thisID = $(this).attr("id");
-            $(this).text("");
-            thisID = thisID.split("-");
-            currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
-            if (currentQuestion === "") { return; }
-            $("#instruction").text("Press Space Bar to Buzz In");
-            questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
-            console.log(currentQuestion);
-            currentAnswer = answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
-            answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
-            console.log(currentAnswer);
-            acceptBuzzer = true;
-            var newDiv = $("<div>").attr("id", "questionBoard");
+    questionsSeen++;
+    var thisID = $(this).attr("id");
+    $(this).text("");
+    thisID = thisID.split("-");
+    currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
+    if (currentQuestion === "") { return; }
+    $("#instruction").text("Press Space Bar to Buzz In");
+    questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
+    console.log(currentQuestion);
+    currentAnswer = answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
+    answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
+    console.log(currentAnswer);
+    acceptBuzzer = true;
+    var newDiv = $("<div>").attr("id", "questionBoard");
+    newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
+    $("body").prepend(newDiv);
+    newDiv.slideDown(750, "swing", readQuestion);
+    var counter = 10;
+    var counterText = $("<p>").text(counter);
+    newDiv.append(counterText);
+    var interval = setInterval(function () {
+        counterText.text(--counter);
+        if (counter === 0) {
+
+            newDiv.empty();
             newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
-            $("body").prepend(newDiv);
-            newDiv.slideDown(750, "swing", readQuestion);
-            var counter = 10;
-            var counterText = $("<p>").text(counter);
-            newDiv.append(counterText);
-            var interval = setInterval(function () {
-                counterText.text(--counter);
-                if (counter === 0) {
-                    newDiv.slideUp(750, "swing", function () {
-                        newDiv.remove();
-                        clearInterval(interval);
-                        $(document).off();
-                        if (questionsSeen === 30) {
-                            finalJeopardy();
-                        }
-                    })
-                }
-            }, 1000)
-
-            $(document).keypress(function (e) {
-                if (e.keyCode == 32 && acceptBuzzer) {
+            newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
+            setTimeout(function () {
+                newDiv.slideUp(750, "swing", function () {
+                    newDiv.remove()
+                    $("#score .card-header").removeClass("buzzed");
                     clearInterval(interval);
-                    counterText.remove();
-                    $("#instruction").text("Type Your Answer");
-                    var newForm = $("<form>").attr("id", "answerForm");
-                    newForm.append($("<input type='text' id='answerBox'>"))
-                    newForm.append($("<input type='submit' id='answerButton'>").val("Answer"))
-                    newDiv.append(newForm);
-                    $("#score .card-header").addClass("buzzed");
-                    $("#answerForm").submit(function (event) {
-                        event.preventDefault();
-                        var guessedAnswer = $('#answerBox').val();
-                        newDiv.slideUp(750, "swing", function () {
-                            newDiv.remove()
-                            $("#score .card-header").removeClass("buzzed");
-                        });
-                        console.log(guessedAnswer);
-                        if (questionsSeen === 30) {
-                            finalJeopardy();
-                        }
-                    })
+                    $(document).off();
+                    if (questionsSeen === 30) {
+                        finalJeopardy();
+                    }
+                });
+            }, 4000)
+        }
+    }, 1000)
+
+    $(document).keypress(function (e) {
+        if (e.keyCode == 32 && acceptBuzzer) {
+            clearInterval(interval);
+            counterText.remove();
+            $("#instruction").text("Type Your Answer");
+            var newForm = $("<form>").attr("id", "answerForm");
+            newForm.append($("<input type='text' id='answerBox'>"))
+            newForm.append($("<input type='submit' id='answerButton'>").val("Answer"))
+            newDiv.append(newForm);
+            $("#score .card-header").addClass("buzzed");
+            $("#answerForm").submit(function (event) {
+                event.preventDefault();
+                var guessedAnswer = $('#answerBox').val();
+                newDiv.empty();
+                newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
+                newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
+
+                if (checkIfCorrect(guessedAnswer, currentAnswer)) {
+                    //correct response
+                    newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
                 }
-                acceptBuzzer = false;
-                $(document).off();
-            });
+                else {
+                    //incorrect reponse
+                    newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
+                }
+                setTimeout(function () {
+                    newDiv.slideUp(750, "swing", function () {
+                        newDiv.remove()
+                        $("#score .card-header").removeClass("buzzed");
+                    });
+                }, 4000)
+
+                console.log(guessedAnswer);
+                if (questionsSeen === 30) {
+                    finalJeopardy();
+                }
+            })
+        }
+        acceptBuzzer = false;
+        $(document).off();
+    });
 
 
 
-        });
+});
 
 
-    ////////////////////////////////////////////////
-    ////////////// Program Start ///////////////////
-    ////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////// Program Start ///////////////////
+////////////////////////////////////////////////
 
-    askName();
-    loadQuestionsFromJService();
+askName();
+loadQuestionsFromJService();
