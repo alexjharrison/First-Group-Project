@@ -172,7 +172,7 @@ function finalJeopardy() {
             $("#finalForm").submit(function (e) {
                 newDiv.empty();
                 if (checkIfCorrect($("#finalFinalText").val(), currentAnswer)) {
-
+                
                 }
                 else {
 
@@ -183,8 +183,13 @@ function finalJeopardy() {
 }
 
 function checkIfCorrect(guess, rightAns) {
-    return true;
-}
+    if (guess == rightAns){
+        return true;
+    }
+    else {
+        return false;
+    }
+} 
 
 
 
@@ -262,7 +267,7 @@ $(".question").click(function () {
                 }
                 else {
                     //incorrect reponse
-                    newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
+                    newDiv.append($("<p>").attr("id", "response").text("You are Incorrect!"));
                 }
                 setTimeout(function () {
                     newDiv.slideUp(750, "swing", function () {
