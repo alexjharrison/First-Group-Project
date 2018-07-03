@@ -125,3 +125,22 @@ body{
 .buzzed {
     border: 3px solid red;
 }
+
+#nameBoard {
+    position: fixed;
+    top: 120px;
+    height:400px;
+    width: 100%;
+    background-color: #060CE9;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:white;
+    border: 1px solid black;
+    text-shadow: 2px 2px 2px black;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 86px;
+    font-size: 30px;
+    margin: 0 auto;
+    z-index: 2;
+    display: none;
+}
