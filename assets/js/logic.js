@@ -98,38 +98,48 @@ var snd = function (nameOfSong) {
 };
 
 function askName() {
-    $("#main").prepend("<div id='firstScreen'>")
+    newDiv = $("<div>").attr("id", "nameBoard");
     var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
     var text = $("<p>Enter your name to begin</p>")
-    var form = ("<input type='text' id='nameBox'>")
-    var submit = ("<input type='submit' id='submitButton'>")
-    $("#firstScreen").append(img, text, form, submit)
-    $("#submitButton").on("click", function () {
-        var enteredName = $('#nameBox').val();
+    var newForm = $("<form>").attr("id", "nameForm");
+    newForm.append($("<input type='text' id='nameBox'>"))
+    newForm.append($("<input type='submit' id='nameButton'>"))
+    newDiv.append(img,text,newForm);
+    $("body").append(newDiv);
+    newDiv.slideDown(500);
+    $("#nameForm").submit( function (e) {
+        e.preventDefault();
+        var enteredName = $("#nameBox").val();
         console.log(enteredName);
-        $("#firstScreen").hide();
+        newDiv.slideUp(500);
+        newDiv.remove();
         $("#contName").text(enteredName);
+        $(document).off();
     })
 }
-
-function botBuzz () {
-    botBuzz1.delay(botTime1+000)
-    
-    }
-    botBuzz ()
 
 var readQuestion = function () {
 
 }
+
+
+function speakLine(text) {
+    text = encodeURIComponent(text);
+    console.log(text);
+
+    var url = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + text + "&tl=en&client=tw-ob"
+
+    $("audio").attr("src", url).get(0).play();
+
+}
+
 
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
 
 
-$(document).on("submit", "#enter-answer", function () {
-    alert("submitted");
-})
+
 
 // On selected question click a blue box that we will be able to fill with relevant questions
 $(".question").click(function () {
@@ -155,44 +165,59 @@ $(".question").click(function () {
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
-            newDiv.slideUp(750, "swing", function(){
+            newDiv.slideUp(750, "swing", function () {
                 newDiv.remove();
                 clearInterval(interval);
                 $(document).off();
             })
         }
     }, 1000)
+    botBuzz();
 
     $(document).keypress(function (e) {
         if (e.keyCode == 32 && acceptBuzzer) {
             clearInterval(interval);
             counterText.remove();
             $("#instruction").text("Type Your Answer");
-            var newForm = $("<form>").attr("id","answerForm");
+            var newForm = $("<form>").attr("id", "answerForm");
             newForm.append($("<input type='text' id='answerBox'>"))
             newForm.append($("<input type='submit' id='answerButton'>"))
             newDiv.append(newForm);
             $("#score .card-header").addClass("buzzed");
             $("#answerForm").submit(function (event) {
+                $("#instruction").text("Chose a new question");
                 event.preventDefault();
                 var guessedAnswer = $('#answerBox').val();
                 newDiv.slideUp(750, "swing", function () {
                     newDiv.remove()
                     $("#score .card-header").removeClass("buzzed");
                 });
-                console.log(guessedAnswer);
+                console.log(guessedAnswer, currentAnswer);
             })
         }
         acceptBuzzer = false;
         $(document).off();
-    });
-    if (counter > 0) {
+
+    }); 
+    function botAnswer() {
+        clearInterval(interval);
+        counterText.remove();
+        $("#instruction").text("Wait for answer");
+        $("#scoreBot1 .card-header").addClass("buzzed");
+    acceptBuzzer = false;
+    $(document).off();
+}
+    function botBuzz () {
         var botTime1 = Math.floor(Math.random()* 6 + 5)
         var botTime2 = Math.floor(Math.random()* 6 + 5)
         if (botTime1 === botTime2) {
             botTime2 = Math.floor(Math.random()* 6 + 5)
+            }
+            console.log(botTime1, botTime2)
+        setInterval(function(){
+            botAnswer()
+            ,(botTime1 + 000)});
         }
-    }
 });
 
 

@@ -103,25 +103,44 @@ body{
     padding-top: 5px;
 
 }
-#title {
+/* #title {
  margin-top:-25px;
  margin-bottom: -25px;
-}
+} */
 #dynamic{
     text-align: center;
     background-color: #060CE9;
     font-family: 'Times New Roman', Times, serif;
 }
-#firstScreen{
+/* #firstScreen{
     border: 2px yellow solid;
     background-color: #060CE9;
     margin-top: auto;
-}
-#nameBox {
+} */
+/* #nameBox {
     align: center;
     margin: auto;
-}
+} */
 
 .buzzed {
     border: 3px solid red;
 }
+
+/* #nameBoard {
+    position: fixed;
+    top: 120px;
+    height:400px;
+    width: 100%;
+    background-color: #060CE9;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:white;
+    border: 1px solid black;
+    text-shadow: 2px 2px 2px black;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 86px;
+    font-size: 30px;
+    margin: 0 auto;
+    z-index: 2;
+    display: none;
+} */
