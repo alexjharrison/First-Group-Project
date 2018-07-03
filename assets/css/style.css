@@ -49,7 +49,7 @@ body{
     color: #FEE29F;
     font-size: 25px;
 }
-#scoreBot{
+#scoreBot1, #scoreBot2{
     margin-top:10px;
     margin-left: 50px;
     height:160px;
