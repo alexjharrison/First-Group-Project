@@ -211,8 +211,13 @@ function finalJeopardy() {
 }
 
 function checkIfCorrect(guess, rightAns) {
-    return true;
-}
+    if (guess == rightAns){
+        return true;
+    }
+    else {
+        return false;
+    }
+} 
 
 
 ////////////////////////////////////////////////
