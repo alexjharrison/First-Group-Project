@@ -127,7 +127,6 @@ var readQuestion = function () {
 }
 
 
-
 function speakLine(text) {
     text = encodeURIComponent(text);
     console.log(text);
@@ -207,8 +206,6 @@ function checkIfCorrect(guess, rightAns) {
 }
 
 
-
-
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
@@ -239,6 +236,7 @@ $(".question").click(function () {
     var counter = 10;
     var counterText = $("<p>").text(counter);
     newDiv.append(counterText);
+    botBuzz()
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
@@ -259,6 +257,7 @@ $(".question").click(function () {
             }, 4000)
         }
     }, 1000)
+    
 
     $(document).keypress(function (e) {
         if (e.keyCode == 32 && acceptBuzzer) {
@@ -271,8 +270,13 @@ $(".question").click(function () {
             newDiv.append(newForm);
             $("#score .card-header").addClass("buzzed");
             $("#answerForm").submit(function (event) {
+                $("#instruction").text("Chose a new question");
                 event.preventDefault();
                 var guessedAnswer = $('#answerBox').val();
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/Erin
                 newDiv.empty();
                 newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
                 newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
@@ -304,10 +308,40 @@ $(".question").click(function () {
         }
         acceptBuzzer = false;
         $(document).off();
-    });
 
+    }); 
+    function botAnswer1() {
+        clearInterval(interval);
+        counterText.remove();
+        $("#instruction").text("Wait for answer");
+        $("#scoreBot1 .card-header").addClass("buzzed");
+    acceptBuzzer = false;
+    $(document).off();
+    }
 
+    function botAnswer2() {
+        clearInterval(interval);
+        counterText.remove();
+        $("#instruction").text("Wait for answer");
+        $("#scoreBot2 .card-header").addClass("buzzed");
+    acceptBuzzer = false;
+    $(document).off();
+    }
 
+    function botBuzz () {
+        var botTime1 = Math.floor(Math.random()* 6000 + 5000)
+        var botTime2 = Math.floor(Math.random()* 6000 + 5000)
+        if (botTime1 === botTime2) {
+            botTime2 = Math.floor(Math.random()* 6 + 5)
+            }
+            console.log(botTime1, botTime2)
+            setInterval(botAnswer1, botTime1)
+            setInterval(botAnswer2, botTime2)
+        }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/Erin
 });
 
 
