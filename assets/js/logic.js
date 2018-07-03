@@ -4,7 +4,7 @@
 
 var allCategories = {
     name: ["Potpourriiii", "Stupid Answers", "Sports", "American History", "Animals", "3 Letter Words", "Science", "Transportation", "U.S. Cities", "People", "Television", "Hodgepodge", "State Capitals", "History", "The Bible", "Business & Industry", "U.S. Geography", "Annual Events", "Common Bonds", "Food", "Rhyme Time", "Word Origins", "Pop Music"],
-    id: [306, 136, 42, 780, 21, 105, 25, 130, 7, 442, 67, 227, 109, 114, 31, 176, 582, 1114, 508, 49, 561, 223, 770]
+    id: [306, 136, 42, 780, 21, 105, 25, 103, 7, 442, 67, 227, 109, 114, 31, 176, 582, 1114, 508, 49, 561, 223, 770]
 }
 var points = [100, 200, 300, 400, 500];
 
@@ -73,15 +73,13 @@ var apiCaller = function (i, j, catId) {
         var newQ = response[randomInt].question;
         var newA = response[randomInt].answer;
         //add this to the bot answering function---------------------------------------------------------------
-        var botRand = Math.floor(Math.random()*response.length);
-        var botWrongAnswer=response[botRand].answer;
-        console.log(botWrongAnswer)
+        var botRand = Math.floor(Math.random() * response.length);
+        var botWrongAnswer = response[botRand].answer;
         //------------------------------------------------------------------------------------------------------
         questions[i][j] = newQ;
         answers[i][j] = newA;
         apiCounter++;
         if (apiCounter === 30) {
-            console.log(categories, questions, answers)
             if (questions.includes("=") || answers.includes("=")) {
                 loadQuestionsFromJService();
             }
@@ -107,6 +105,7 @@ var snd = function (nameOfSong) {
 };
 
 function askName() {
+
     newDiv = $("<div>").attr("id", "nameBoard");
     var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'><br><br>");
     var text = $("<p>Enter your name to begin</p>")
@@ -116,10 +115,10 @@ function askName() {
     newDiv.append(img, text, newForm);
     $("body").append(newDiv);
     newDiv.slideDown(500);
+    $("#nameBox").focus();
     $("#nameForm").submit(function (e) {
         e.preventDefault();
         var enteredName = $("#nameBox").val();
-        console.log(enteredName);
         newDiv.slideUp(500);
         newDiv.remove();
         $("#contName").text(enteredName);
@@ -129,7 +128,6 @@ function askName() {
 
 function speakLine(text) {
     text = encodeURIComponent(text);
-    console.log(text);
 
     var url = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + text + "&tl=en&client=tw-ob"
 
@@ -142,7 +140,6 @@ function finalJeopardy() {
         method: "GET",
         url: "http://jservice.io/api/random?count=1"
     }).then(function (response) {
-        console.log(response);
         var newDiv = $("<div>").attr("id", "questionBoard");
         newDiv.append($("<p>").text("Final Jeopardy"));
         newDiv.append($("<p>").html("Category: " + response[0].category.title))
@@ -160,12 +157,13 @@ function finalJeopardy() {
         newDiv.slideDown(500);
         $("#finalForm").submit(function (e) {
             e.preventDefault();
+            $("#instruction").text("Make a wager in whole dollars for the last question");
             thisScore = parseInt($("#finalText").val());
             newDiv.empty();
-            console.log(thisScore);
             currentQuestion = response[0].question;
             speakLine(currentQuestion);
             currentAnswer = response[0].answer;
+            console.log(currentAnswer);
             newDiv.append($("<p>").html("Category: " + response[0].category.title))
             newDiv.append($("<p>").html(currentQuestion));
             var newForm = $("<form>").attr("id", "finalFinalForm");
@@ -175,11 +173,12 @@ function finalJeopardy() {
                 "type": "submit"
             }).val("Answer"));
             newDiv.append(newForm);
+            $("#finalFinalText").focus();
             $("#finalForm").off();
             $("#finalFinalForm").submit(function (e2) {
                 e2.preventDefault();
-                speakLine("The correct answer is " +currentAnswer);
-                newDiv.empty();
+                $("#instruction").text("Good Luck");
+                speakLine("The correct answer is " + currentAnswer);
                 if (checkIfCorrect($("#finalFinalText").val(), currentAnswer)) {
                     //correct response
                     newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
@@ -192,8 +191,9 @@ function finalJeopardy() {
                     myScore -= thisScore;
                     $("#contScore").text(myScore);
                 }
-                speakLine("The correct answer is " +currentAnswer);
-                setTimeout (function() {
+                newDiv.empty();
+                speakLine("The correct answer is " + currentAnswer);
+                setTimeout(function () {
                     if (myScore > bot1Score && myScore > bot2Score) {
                         newDiv.append($("<p>").attr("id", "ending").text("You win!"));
                         speakLine("You Win!");
@@ -202,16 +202,35 @@ function finalJeopardy() {
                         newDiv.append($("<p>").attr("id", "ending").text("You Lose!"));
                         speakLine("You Lose!");
                     }
-                },3000)
-                newDiv.append($("<p>").attr("id", "response").text("Answer: "+currentAnswer));
-                
+                }, 3000)
+                newDiv.append($("<p>").attr("id", "response").html("Answer: " + currentAnswer));
+
             })
         })
     })
 }
 
 function checkIfCorrect(guess, rightAns) {
-    return true;
+    guess = guess.replace(",", "").replace(".", "").replace("\'", "").replace('\"', "").replace('<a>', "").replace(':', "").replace(';', "").replace('(', "").replace(')', "").replace('<i>', "").replace('\\', "").trim();
+    rightAns = rightAns.replace(",", "").replace(".", "").replace("\'", "").replace('\"', "").replace('<a>', "").replace(':', "").replace(';', "").replace('(', "").replace(')', "").replace('<i>', "").replace('\\', "").replace('&', "").trim();
+    guess = guess.split(" ");
+    rightAns = rightAns.split(" ");
+    for (var i = 0; i < guess.length; i++) {
+        for (var j = 0; j < rightAns.length; j++) {
+            if (guess[i].charAt(guess[i].length - 1) === "s") {
+                guess[i] = guess[i].substring(0,guess[i].length - 1);
+            }
+            if (rightAns[j].charAt(rightAns[i].length - 1) === "s") {
+                rightAns[j] = rightAns[j].substring(0,rightAns[j].length - 1);
+            }
+            if (rightAns[j].toLowerCase() === guess[i].toLowerCase()) {
+                if ((rightAns[i] !== "a") && (rightAns[i] !== "an") && (rightAns[i] !== "the")) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 
@@ -234,13 +253,12 @@ $(".question").click(function () {
     speakLine(currentQuestion);
     $("#instruction").text("Press Space Bar to Buzz In");
     questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
-    console.log(currentQuestion);
     currentAnswer = answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     answers[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
-    console.log(currentAnswer);
     acceptBuzzer = true;
     var newDiv = $("<div>").attr("id", "questionBoard");
     newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
+    console.log(currentAnswer);
     $("body").prepend(newDiv);
     newDiv.slideDown(750, "swing");
     var counter = 10;
@@ -252,20 +270,21 @@ $(".question").click(function () {
         if (counter === 0) {
 
             newDiv.empty();
-            newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
-            newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
+            newDiv.append($("<p>").attr("id", "currentQuestion").html(currentQuestion));
+            newDiv.append($("<p>").attr("id", "currentAnswer").html("Answer: " + currentAnswer));
             setTimeout(function () {
                 newDiv.slideUp(750, "swing", function () {
                     newDiv.remove()
                     $("#score .card-header").removeClass("buzzed");
                     clearInterval(interval);
                     $(document).off();
+                    $("#instruction").text("Click a question to play");
                     if (questionsSeen === 30) {
                         finalJeopardy();
                     }
                 });
             }, 4000)
-            speakLine("The correct answer is "+currentAnswer)
+            speakLine("The correct answer is " + currentAnswer)
         }
     }, 1000)
 
@@ -279,14 +298,14 @@ $(".question").click(function () {
             newForm.append($("<input type='text' id='answerBox'>"))
             newForm.append($("<input type='submit' id='answerButton'>").val("Answer"))
             newDiv.append(newForm);
+            $("#answerBox").focus();
             $("#score .card-header").addClass("buzzed");
             $("#answerForm").submit(function (event) {
-                $("#instruction").text("Chose a new question");
                 event.preventDefault();
                 var guessedAnswer = $('#answerBox').val();
                 newDiv.empty();
-                newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
-                newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
+                newDiv.append($("<p>").attr("id", "currentQuestion").html(currentQuestion));
+                newDiv.append($("<p>").attr("id", "currentAnswer").html("Answer: " + currentAnswer));
 
                 if (checkIfCorrect(guessedAnswer, currentAnswer)) {
                     //correct response
@@ -306,9 +325,8 @@ $(".question").click(function () {
                         $("#score .card-header").removeClass("buzzed");
                     });
                 }, 4000)
-                speakLine("The correct answer is "+currentAnswer)
+                speakLine("The correct answer is " + currentAnswer)
 
-                console.log(guessedAnswer);
                 if (questionsSeen === 30) {
                     finalJeopardy();
                 }
