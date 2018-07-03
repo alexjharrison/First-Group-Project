@@ -273,6 +273,10 @@ $(".question").click(function () {
                 $("#instruction").text("Chose a new question");
                 event.preventDefault();
                 var guessedAnswer = $('#answerBox').val();
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/Erin
                 newDiv.empty();
                 newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
                 newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
@@ -334,6 +338,10 @@ $(".question").click(function () {
             setInterval(botAnswer1, botTime1)
             setInterval(botAnswer2, botTime2)
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/Erin
 });
 
 
