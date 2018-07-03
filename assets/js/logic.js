@@ -14,6 +14,7 @@ var scores = [];
 var acceptBuzzer = false;
 var currentQuestion = "";
 var currentAnswer = "";
+var guessedAnswer = "";
 
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
@@ -97,17 +98,23 @@ var snd = function (nameOfSong) {
 };
 
 function askName() {
-    $("#main").prepend("<div id='firstScreen'>")
-    var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
+    newDiv = $("<div>").attr("id", "nameBoard");
+    var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'><br><br>");
     var text = $("<p>Enter your name to begin</p>")
-    var form = ("<input type='text' id='nameBox'>")
-    var submit = ("<input type='submit' id='submitButton'>")
-    $("#firstScreen").append(img, text, form, submit)
-    $("#submitButton").on("click", function () {
-        var enteredName = $('#nameBox').val();
+    var newForm = $("<form>").attr("id", "nameForm");
+    newForm.append($("<input type='text' id='nameBox'>"))
+    newForm.append($("<input type='submit' id='nameButton'>"))
+    newDiv.append(img,text,newForm);
+    $("body").append(newDiv);
+    newDiv.slideDown(500);
+    $("#nameForm").submit( function (e) {
+        e.preventDefault();
+        var enteredName = $("#nameBox").val();
         console.log(enteredName);
-        $("#firstScreen").hide();
+        newDiv.slideUp(500);
+        newDiv.remove();
         $("#contName").text(enteredName);
+        $(document).off();
     })
 }
 
@@ -135,14 +142,12 @@ function speakLine(text) {
 ////////////////////////////////////////////////
 
 
-$(document).on("submit", "#enter-answer", function () {
-    alert("submitted");
-})
+
 
 // On selected question click a blue box that we will be able to fill with relevant questions
 $(".question").click(function () {
     var thisID = $(this).attr("id");
-    $(this).text = "";
+    $(this).text("");
     thisID = thisID.split("-");
     currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     if (currentQuestion === "") { return; }
