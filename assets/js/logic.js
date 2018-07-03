@@ -158,6 +158,7 @@ function finalJeopardy() {
             $("#instruction").text("Make a wager in whole dollars for the last question");
             thisScore = parseInt($("#finalText").val());
             newDiv.empty();
+            snd("final_jeopardy");
             currentQuestion = response[0].question;
             speakLine(currentQuestion);
             currentAnswer = response[0].answer;
