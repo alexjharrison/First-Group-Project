@@ -124,7 +124,6 @@ var readQuestion = function () {
 }
 
 
-
 function speakLine(text) {
     text = encodeURIComponent(text);
     console.log(text);
@@ -187,8 +186,6 @@ function checkIfCorrect(guess, rightAns) {
 }
 
 
-
-
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
@@ -238,6 +235,7 @@ $(".question").click(function () {
             }, 4000)
         }
     }, 1000)
+    botBuzz();
 
     $(document).keypress(function (e) {
         if (e.keyCode == 32 && acceptBuzzer) {
@@ -250,8 +248,10 @@ $(".question").click(function () {
             newDiv.append(newForm);
             $("#score .card-header").addClass("buzzed");
             $("#answerForm").submit(function (event) {
+                $("#instruction").text("Chose a new question");
                 event.preventDefault();
                 var guessedAnswer = $('#answerBox').val();
+
                 newDiv.empty();
                 newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
                 newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
@@ -279,9 +279,27 @@ $(".question").click(function () {
         }
         acceptBuzzer = false;
         $(document).off();
-    });
 
-
+    }); 
+    function botAnswer() {
+        clearInterval(interval);
+        counterText.remove();
+        $("#instruction").text("Wait for answer");
+        $("#scoreBot1 .card-header").addClass("buzzed");
+    acceptBuzzer = false;
+    $(document).off();
+}
+    function botBuzz () {
+        var botTime1 = Math.floor(Math.random()* 6 + 5)
+        var botTime2 = Math.floor(Math.random()* 6 + 5)
+        if (botTime1 === botTime2) {
+            botTime2 = Math.floor(Math.random()* 6 + 5)
+            }
+            console.log(botTime1, botTime2)
+        setInterval(function(){
+            botAnswer()
+            ,(botTime1 + 000)});
+        }
 
 });
 
