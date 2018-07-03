@@ -14,6 +14,7 @@ var scores = [];
 var acceptBuzzer = false;
 var currentQuestion = "";
 var currentAnswer = "";
+var guessedAnswer = "";
 
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
@@ -97,27 +98,23 @@ var snd = function (nameOfSong) {
 };
 
 function askName() {
-    //put #firstScreen at the top of #main
-    $("#main").prepend("<div id='firstScreen'>")
-    //create an img element with an id title and a source of the jeopardy picture, store it in var img
+    newDiv = $("<div>").attr("id", "nameBoard");
     var img = $("<img id='title' src='assets/jeopardy.png' alt='Jeopardy!'>");
-    //create a p element and store it in the var text
     var text = $("<p>Enter your name to begin</p>")
-    //create a textbox and store it in var form
-    var form = ("<input type='text' id='nameBox'>")
-    //create a submit button and store it in var submit
-    var submit = ("<input type='submit' id='submitButton'>")
-    //when the user clicks #firstscreen tack all of those elements underneath #firstScreen, in the #main div
-    $("#firstScreen").append(img, text, form, submit)
-    //when user clicks the submit button...
-    $("#submitButton").on("click", function () {
-        //create a variable called entered, and set its value to whatever the user types in in the textbox that we just made (#nameBox) 
-        var enteredName = $('#nameBox').val();
-        //log that
+    var newForm = $("<form>").attr("id", "nameForm");
+    newForm.append($("<input type='text' id='nameBox'>"))
+    newForm.append($("<input type='submit' id='nameButton'>"))
+    newDiv.append(img,text,newForm);
+    $("body").append(newDiv);
+    newDiv.slideDown(500);
+    $("#nameForm").submit( function (e) {
+        e.preventDefault();
+        var enteredName = $("#nameBox").val();
         console.log(enteredName);
-        //hide 
-        $("#firstScreen").hide();
+        newDiv.slideUp(500);
+        newDiv.remove();
         $("#contName").text(enteredName);
+        $(document).off();
     })
 }
 
@@ -125,19 +122,32 @@ var readQuestion = function () {
 
 }
 
+
+
+function speakLine(text) {
+    text = encodeURIComponent(text);
+    console.log(text);
+
+    var url = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + text + "&tl=en&client=tw-ob"
+
+    $("audio").attr("src", url).get(0).play();
+
+}
+
+
+
+
 ////////////////////////////////////////////////
 ///////// Click & Keypress Events //////////////
 ////////////////////////////////////////////////
 
 
-$(document).on("submit", "#enter-answer", function () {
-    alert("submitted");
-})
+
 
 // On selected question click a blue box that we will be able to fill with relevant questions
 $(".question").click(function () {
     var thisID = $(this).attr("id");
-    $(this).text = "";
+    $(this).text("");
     thisID = thisID.split("-");
     currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     if (currentQuestion === "") { return; }
@@ -158,7 +168,7 @@ $(".question").click(function () {
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
-            newDiv.slideUp(750, "swing", function(){
+            newDiv.slideUp(750, "swing", function () {
                 newDiv.remove();
                 clearInterval(interval);
                 $(document).off();
@@ -171,7 +181,7 @@ $(".question").click(function () {
             clearInterval(interval);
             counterText.remove();
             $("#instruction").text("Type Your Answer");
-            var newForm = $("<form>").attr("id","answerForm");
+            var newForm = $("<form>").attr("id", "answerForm");
             newForm.append($("<input type='text' id='answerBox'>"))
             newForm.append($("<input type='submit' id='answerButton'>"))
             newDiv.append(newForm);
