@@ -17,6 +17,7 @@ var currentQuestion = "";
 var currentAnswer = "";
 var guessedAnswer = "";
 var questionsSeen = 0;
+var botWrongAnswer = "";
 
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
@@ -72,11 +73,8 @@ var apiCaller = function (i, j, catId) {
         var randomInt = Math.floor(Math.random() * response.length);
         var newQ = response[randomInt].question;
         var newA = response[randomInt].answer;
-        //add this to the bot answering function---------------------------------------------------------------
         var botRand = Math.floor(Math.random()*response.length);
-        var botWrongAnswer=response[botRand].answer;
-        console.log(botWrongAnswer)
-        //------------------------------------------------------------------------------------------------------
+        botWrongAnswer=response[botRand].answer;
         questions[i][j] = newQ;
         answers[i][j] = newA;
         apiCounter++;
@@ -278,10 +276,7 @@ $(".question").click(function () {
                 $("#instruction").text("Chose a new question");
                 event.preventDefault();
                 var guessedAnswer = $('#answerBox').val();
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/Erin
                 newDiv.empty();
                 newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
                 newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
@@ -320,8 +315,21 @@ $(".question").click(function () {
         counterText.remove();
         $("#instruction").text("Wait for answer");
         $("#scoreBot1 .card-header").addClass("buzzed");
+        newDiv.append($("<p>").text(botWrongAnswer))
+        console.log(botWrongAnswer)
     acceptBuzzer = false;
     $(document).off();
+    setTimeout(function () {
+        newDiv.slideUp(750, "swing", function () {
+            newDiv.remove()
+            $("#score .card-header").removeClass("buzzed");
+            clearInterval(interval);
+            $(document).off();
+            if (questionsSeen === 30) {
+                finalJeopardy();
+            }
+        });
+    }, 4000)
     }
 
     function botAnswer2() {
@@ -331,6 +339,17 @@ $(".question").click(function () {
         $("#scoreBot2 .card-header").addClass("buzzed");
     acceptBuzzer = false;
     $(document).off();
+    setTimeout(function () {
+        newDiv.slideUp(750, "swing", function () {
+            newDiv.remove()
+            $("#score .card-header").removeClass("buzzed");
+            clearInterval(interval);
+            $(document).off();
+            if (questionsSeen === 30) {
+                finalJeopardy();
+            }
+        });
+    }, 4000)
     }
 
     function botBuzz () {
@@ -343,10 +362,7 @@ $(".question").click(function () {
             setInterval(botAnswer1, botTime1)
             setInterval(botAnswer2, botTime2)
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/Erin
 });
 
 
