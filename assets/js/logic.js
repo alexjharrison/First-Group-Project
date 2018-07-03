@@ -112,6 +112,12 @@ function askName() {
     })
 }
 
+function botBuzz () {
+    botBuzz1.delay(botTime1+000)
+    
+    }
+    botBuzz ()
+
 var readQuestion = function () {
 
 }
@@ -180,8 +186,13 @@ $(".question").click(function () {
         acceptBuzzer = false;
         $(document).off();
     });
-
-
+    if (counter > 0) {
+        var botTime1 = Math.floor(Math.random()* 6 + 5)
+        var botTime2 = Math.floor(Math.random()* 6 + 5)
+        if (botTime1 === botTime2) {
+            botTime2 = Math.floor(Math.random()* 6 + 5)
+        }
+    }
 });
 
 
