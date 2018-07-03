@@ -159,7 +159,7 @@ function finalJeopardy() {
         $("#finalForm").submit(function (e) {
             e.preventDefault();
             newDiv.empty();
-            var wager = $("#finalText").val();
+            thisScore = $("#finalText").val();
             currentQuestion = response[0].question;
             currentAnswer = response[0].answer;
             newDiv.append($("<p>").html("Category: " + response[0].category.title))
@@ -175,10 +175,22 @@ function finalJeopardy() {
             $("#finalForm").submit(function (e) {
                 newDiv.empty();
                 if (checkIfCorrect($("#finalFinalText").val(), currentAnswer)) {
-
+                    //correct response
+                    newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
+                    myScore += thisScore;
+                    $("#contScore").text(myScore);
                 }
                 else {
-
+                    //incorrect reponse
+                    newDiv.append($("<p>").attr("id", "response").text("You are Incorrect!"));
+                    myScore -= thisScore;
+                    $("#contScore").text(myScore);
+                }
+                if (myScore > bot1Score && myScore > bot2Score) {
+                    newDiv.append($("<p>").attr("id", "ending").text("You win!"));
+                }
+                else {
+                    newDiv.append($("<p>").attr("id", "ending").text("You Lose!"));
                 }
             })
         })
