@@ -289,7 +289,7 @@ $(".question").click(function () {
     acceptBuzzer = false;
     $(document).off();
     }
-    
+
     function botAnswer2() {
         clearInterval(interval);
         counterText.remove();
