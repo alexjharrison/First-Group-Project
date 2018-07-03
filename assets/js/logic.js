@@ -193,7 +193,7 @@ $(".question").click(function () {
                     newDiv.remove()
                     $("#score .card-header").removeClass("buzzed");
                 });
-                console.log(guessedAnswer);
+                console.log(guessedAnswer, currentAnswer);
                 console.log(answer());
             })
         }
