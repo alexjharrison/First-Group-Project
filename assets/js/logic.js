@@ -15,6 +15,7 @@ var acceptBuzzer = false;
 var currentQuestion = "";
 var currentAnswer = "";
 var guessedAnswer = "";
+var questionsSeen = 0;
 
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
@@ -104,10 +105,10 @@ function askName() {
     var newForm = $("<form>").attr("id", "nameForm");
     newForm.append($("<input type='text' id='nameBox'>"))
     newForm.append($("<input type='submit' id='nameButton'>"))
-    newDiv.append(img,text,newForm);
+    newDiv.append(img, text, newForm);
     $("body").append(newDiv);
     newDiv.slideDown(500);
-    $("#nameForm").submit( function (e) {
+    $("#nameForm").submit(function (e) {
         e.preventDefault();
         var enteredName = $("#nameBox").val();
         console.log(enteredName);
@@ -134,6 +135,57 @@ function speakLine(text) {
 
 }
 
+function finalJeopardy() {
+    $.ajax({
+        method: "GET",
+        url: "http://jservice.io/api/random?count=1"
+    }).then(function (response) {
+        console.log(response);
+        var newDiv = $("<div>").attr("id", "questionBoard");
+        newDiv.append($("<p>").text("Final Jeopardy"));
+        newDiv.append($("<p>").html("Category: " + response[0].category.title))
+        var newForm = $("<form>").attr("id", "finalForm");
+        newForm.append($("<input type='text' id='finalText'>"));
+        newForm.append($("<input>").attr({
+            "id": "answerButton",
+            "type": "submit"
+        }).val("Wager Amount"))
+        newDiv.append(newForm);
+        $("body").append(newDiv);
+        newDiv.slideDown(500);
+        $("#finalForm").submit(function (e) {
+            e.preventDefault();
+            newDiv.empty();
+            var wager = $("#finalText").val();
+            currentQuestion = response[0].question;
+            currentAnswer = response[0].answer;
+            newDiv.append($("<p>").html("Category: " + response[0].category.title))
+            newDiv.append($("<p>").html(currentQuestion));
+            var newForm = $("<form>").attr("id", "finalFinalForm");
+            newForm.append($("<input type='text' id='finalFinalText'>"));
+            newForm.append($("<input>").attr({
+                "id": "answerButton",
+                "type": "submit"
+            }).val("Answer"));
+            newDiv.append(newForm);
+            $("#finalForm").off();
+            $("#finalForm").submit(function (e) {
+                newDiv.empty();
+                if (checkIfCorrect($("#finalFinalText").val(), currentAnswer)) {
+
+                }
+                else {
+
+                }
+            })
+        })
+    })
+}
+
+function checkIfCorrect(guess, rightAns) {
+    return true;
+}
+
 
 
 
@@ -146,6 +198,7 @@ function speakLine(text) {
 
 // On selected question click a blue box that we will be able to fill with relevant questions
 $(".question").click(function () {
+    questionsSeen++;
     var thisID = $(this).attr("id");
     $(this).text("");
     thisID = thisID.split("-");
@@ -168,11 +221,21 @@ $(".question").click(function () {
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
-            newDiv.slideUp(750, "swing", function () {
-                newDiv.remove();
-                clearInterval(interval);
-                $(document).off();
-            })
+
+            newDiv.empty();
+            newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
+            newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
+            setTimeout(function () {
+                newDiv.slideUp(750, "swing", function () {
+                    newDiv.remove()
+                    $("#score .card-header").removeClass("buzzed");
+                    clearInterval(interval);
+                    $(document).off();
+                    if (questionsSeen === 30) {
+                        finalJeopardy();
+                    }
+                });
+            }, 4000)
         }
     }, 1000)
 
@@ -183,23 +246,41 @@ $(".question").click(function () {
             $("#instruction").text("Type Your Answer");
             var newForm = $("<form>").attr("id", "answerForm");
             newForm.append($("<input type='text' id='answerBox'>"))
-            newForm.append($("<input type='submit' id='answerButton'>"))
+            newForm.append($("<input type='submit' id='answerButton'>").val("Answer"))
             newDiv.append(newForm);
             $("#score .card-header").addClass("buzzed");
             $("#answerForm").submit(function (event) {
                 event.preventDefault();
                 var guessedAnswer = $('#answerBox').val();
-                newDiv.slideUp(750, "swing", function () {
-                    newDiv.remove()
-                    $("#score .card-header").removeClass("buzzed");
-                });
-                console.log(guessedAnswer, currentAnswer);
-                console.log(answer());
+                newDiv.empty();
+                newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
+                newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
+
+                if (checkIfCorrect(guessedAnswer, currentAnswer)) {
+                    //correct response
+                    newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
+                }
+                else {
+                    //incorrect reponse
+                    newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
+                }
+                setTimeout(function () {
+                    newDiv.slideUp(750, "swing", function () {
+                        newDiv.remove()
+                        $("#score .card-header").removeClass("buzzed");
+                    });
+                }, 4000)
+
+                console.log(guessedAnswer);
+                if (questionsSeen === 30) {
+                    finalJeopardy();
+                }
             })
         }
         acceptBuzzer = false;
         $(document).off();
     });
+
 
 
 });
