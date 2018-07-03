@@ -9,8 +9,9 @@ var allCategories = {
 var points = [100, 200, 300, 400, 500];
 
 var categories, questions, answers, wrongAnswers, apiCounter;
+var thisScore;
 var userName;
-var scores = [];
+var myScore, bot1Score, bot2Score;
 var acceptBuzzer = false;
 var currentQuestion = "";
 var currentAnswer = "";
@@ -28,7 +29,9 @@ var loadQuestionsFromJService = function () {
     questions = [[], [], [], [], [], []];
     answers = [[], [], [], [], [], []];
     wrongAnswers = [];
-    scores = [0, 0, 0];
+    myScore = 0;
+    bot1Score = 0;
+    bot2Score = 0;
     apiCounter = 0;
     $("#instruction").text("Click a Box to Get Question");
 
@@ -202,6 +205,7 @@ $(".question").click(function () {
     var thisID = $(this).attr("id");
     $(this).text("");
     thisID = thisID.split("-");
+    thisScore = parseInt(thisID[2]);
     currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     if (currentQuestion === "") { return; }
     $("#instruction").text("Press Space Bar to Buzz In");
@@ -259,10 +263,14 @@ $(".question").click(function () {
                 if (checkIfCorrect(guessedAnswer, currentAnswer)) {
                     //correct response
                     newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
+                    myScore += thisScore;
+                    $("#contScore").text(myScore);
                 }
                 else {
                     //incorrect reponse
-                    newDiv.append($("<p>").attr("id", "response").text("You are Correct!"));
+                    newDiv.append($("<p>").attr("id", "response").text("You are Incorrect!"));
+                    myScore -= thisScore;
+                    $("#contScore").text(myScore);
                 }
                 setTimeout(function () {
                     newDiv.slideUp(750, "swing", function () {
