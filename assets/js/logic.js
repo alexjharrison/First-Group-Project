@@ -126,7 +126,7 @@ function askName() {
 function speakLine(text) {
     text = encodeURIComponent(text);
 
-    var url = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + text + "&tl=en&client=tw-ob"
+    var url = "http://translate.google.com/translate_tts?ie=UTF-8&q=" + text + "&tl=en&client=tw-ob"
 
     $("#speech").attr("src", url).get(0).play();
 
