@@ -59,7 +59,7 @@ var loadQuestionsFromJService = function () {
 }
 
 var apiCaller = function (i, j, catId) {
-    var queryUrl = "https://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
+    var queryUrl = "http://jservice.io/api/clues/?category=" + catId + "&value=" + points[j]
     $.ajax({
         url: queryUrl,
         method: "GET"
@@ -136,7 +136,7 @@ function finalJeopardy() {
     $.ajax({
         method: "GET",
         // url: "https://cors-anywhere.herokuapp.com/jservice.io/api/random?count=1"
-        url: "https://jservice.io/api/random?count=1"
+        url: "http://jservice.io/api/random?count=1"
     }).then(function (response) {
         var newDiv = $("<div>").attr("id", "questionBoard");
         newDiv.append($("<p>").text("Final Jeopardy"));
