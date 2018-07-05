@@ -125,11 +125,6 @@ function askName() {
     })
 }
 
-var readQuestion = function () {
-
-}
-
-
 function speakLine(text) {
     text = encodeURIComponent(text);
     console.log(text);
@@ -151,8 +146,8 @@ function finalJeopardy() {
         newDiv.append($("<p>").html("Category: " + response[0].category.title))
         var newForm = $("<form>").attr("id", "finalForm");
         newForm.append($("<input>").attr({
-            "type":'text',
-            "id":'finalText'
+            "type": 'text',
+            "id": 'finalText'
         }));
         newForm.append($("<input>").attr({
             "id": "answerButton",
@@ -167,6 +162,7 @@ function finalJeopardy() {
             newDiv.empty();
             console.log(thisScore);
             currentQuestion = response[0].question;
+            speakLine(currentQuestion);
             currentAnswer = response[0].answer;
             newDiv.append($("<p>").html("Category: " + response[0].category.title))
             newDiv.append($("<p>").html(currentQuestion));
@@ -180,6 +176,7 @@ function finalJeopardy() {
             $("#finalForm").off();
             $("#finalFinalForm").submit(function (e2) {
                 e2.preventDefault();
+                speakLine("The correct answer is " +currentAnswer);
                 newDiv.empty();
                 if (checkIfCorrect($("#finalFinalText").val(), currentAnswer)) {
                     //correct response
@@ -193,12 +190,19 @@ function finalJeopardy() {
                     myScore -= thisScore;
                     $("#contScore").text(myScore);
                 }
-                if (myScore > bot1Score && myScore > bot2Score) {
-                    newDiv.append($("<p>").attr("id", "ending").text("You win!"));
-                }
-                else {
-                    newDiv.append($("<p>").attr("id", "ending").text("You Lose!"));
-                }
+                speakLine("The correct answer is " +currentAnswer);
+                setTimeout (function() {
+                    if (myScore > bot1Score && myScore > bot2Score) {
+                        newDiv.append($("<p>").attr("id", "ending").text("You win!"));
+                        speakLine("You Win!");
+                    }
+                    else {
+                        newDiv.append($("<p>").attr("id", "ending").text("You Lose!"));
+                        speakLine("You Lose!");
+                    }
+                },3000)
+                newDiv.append($("<p>").attr("id", "response").text("Answer: "+currentAnswer));
+                
             })
         })
     })
@@ -225,6 +229,7 @@ $(".question").click(function () {
     thisScore = parseInt(thisID[2]);
     currentQuestion = questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))];
     if (currentQuestion === "") { return; }
+    speakLine(currentQuestion);
     $("#instruction").text("Press Space Bar to Buzz In");
     questions[thisID[1] - 1][points.indexOf(parseInt(thisID[2]))] = "";
     console.log(currentQuestion);
@@ -235,11 +240,11 @@ $(".question").click(function () {
     var newDiv = $("<div>").attr("id", "questionBoard");
     newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
     $("body").prepend(newDiv);
-    newDiv.slideDown(750, "swing", readQuestion);
+    newDiv.slideDown(750, "swing");
     var counter = 10;
     var counterText = $("<p>").text(counter);
     newDiv.append(counterText);
-    botBuzz()
+    // botBuzz();
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
@@ -258,9 +263,10 @@ $(".question").click(function () {
                     }
                 });
             }, 4000)
+            speakLine("The correct answer is "+currentAnswer)
         }
     }, 1000)
-    
+
 
     $(document).keypress(function (e) {
         if (e.keyCode == 32 && acceptBuzzer) {
@@ -276,7 +282,6 @@ $(".question").click(function () {
                 $("#instruction").text("Chose a new question");
                 event.preventDefault();
                 var guessedAnswer = $('#answerBox').val();
-
                 newDiv.empty();
                 newDiv.append($("<p>").attr("id", "currentQuestion").text(currentQuestion));
                 newDiv.append($("<p>").attr("id", "currentAnswer").text("Answer: " + currentAnswer));
@@ -299,6 +304,7 @@ $(".question").click(function () {
                         $("#score .card-header").removeClass("buzzed");
                     });
                 }, 4000)
+                speakLine("The correct answer is "+currentAnswer)
 
                 console.log(guessedAnswer);
                 if (questionsSeen === 30) {
@@ -309,27 +315,14 @@ $(".question").click(function () {
         acceptBuzzer = false;
         $(document).off();
 
-    }); 
+    });
     function botAnswer1() {
         clearInterval(interval);
         counterText.remove();
         $("#instruction").text("Wait for answer");
         $("#scoreBot1 .card-header").addClass("buzzed");
-        newDiv.append($("<p>").text(botWrongAnswer))
-        console.log(botWrongAnswer)
-    acceptBuzzer = false;
-    $(document).off();
-    setTimeout(function () {
-        newDiv.slideUp(750, "swing", function () {
-            newDiv.remove()
-            $("#score .card-header").removeClass("buzzed");
-            clearInterval(interval);
-            $(document).off();
-            if (questionsSeen === 30) {
-                finalJeopardy();
-            }
-        });
-    }, 4000)
+        acceptBuzzer = false;
+        $(document).off();
     }
 
     function botAnswer2() {
@@ -337,32 +330,20 @@ $(".question").click(function () {
         counterText.remove();
         $("#instruction").text("Wait for answer");
         $("#scoreBot2 .card-header").addClass("buzzed");
-    acceptBuzzer = false;
-    $(document).off();
-    setTimeout(function () {
-        newDiv.slideUp(750, "swing", function () {
-            newDiv.remove()
-            $("#score .card-header").removeClass("buzzed");
-            clearInterval(interval);
-            $(document).off();
-            if (questionsSeen === 30) {
-                finalJeopardy();
-            }
-        });
-    }, 4000)
+        acceptBuzzer = false;
+        $(document).off();
     }
 
-    function botBuzz () {
-        var botTime1 = Math.floor(Math.random()* 6000 + 5000)
-        var botTime2 = Math.floor(Math.random()* 6000 + 5000)
+    function botBuzz() {
+        var botTime1 = Math.floor(Math.random() * 6000 + 5000)
+        var botTime2 = Math.floor(Math.random() * 6000 + 5000)
         if (botTime1 === botTime2) {
-            botTime2 = Math.floor(Math.random()* 6 + 5)
-            }
-            console.log(botTime1, botTime2)
-            setInterval(botAnswer1, botTime1)
-            setInterval(botAnswer2, botTime2)
+            botTime2 = Math.floor(Math.random() * 6 + 5)
         }
-
+        console.log(botTime1, botTime2)
+        setInterval(botAnswer1, botTime1)
+        setInterval(botAnswer2, botTime2)
+    }
 });
 
 
