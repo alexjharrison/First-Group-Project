@@ -17,7 +17,8 @@ var currentQuestion = "";
 var currentAnswer = "";
 var guessedAnswer = "";
 var questionsSeen = 0;
-var botWrongAnswer = "";
+var botWrong = 0;
+var botTime1, botTime2;
 
 ////////////////////////////////////////////////
 /////////// Reusable Functions /////////////////
@@ -72,7 +73,6 @@ var apiCaller = function (i, j, catId) {
         var randomInt = Math.floor(Math.random() * response.length);
         var newQ = response[randomInt].question;
         var newA = response[randomInt].answer;
-        botWrongAnswer = response[randomInt].answer;
         questions[i][j] = newQ;
         answers[i][j] = newA;
         apiCounter++;
@@ -289,6 +289,7 @@ $(".question").click(function () {
         if (e.keyCode == 32 && acceptBuzzer) {
             clearInterval(interval);
             counterText.remove();
+            acceptBuzzer = false;
             $("#instruction").text("Type Your Answer");
             var newForm = $("<form>").attr("id", "answerForm");
             newForm.append($("<input type='text' id='answerBox'>"))
@@ -328,7 +329,6 @@ $(".question").click(function () {
                 }
             })
         }
-        acceptBuzzer = false;
         $(document).off();
 
     });
@@ -337,6 +337,7 @@ $(".question").click(function () {
         clearInterval(interval);
         counterText.remove();
         $("#instruction").text("Wait for answer");
+        acceptBuzzer = false;
         $("#scoreBot1 .card-header").addClass("buzzed");
         $(document).off();
         setTimeout(function () {
@@ -352,7 +353,6 @@ $(".question").click(function () {
             });
         }, 5000)
     }
-    acceptBuzzer = false;
     }
 
     function botAnswer2() {
@@ -360,6 +360,7 @@ $(".question").click(function () {
         clearInterval(interval);
         counterText.remove();
         $("#instruction").text("Wait for answer");
+        acceptBuzzer = false;
         $("#scoreBot2 .card-header").addClass("buzzed");
         $(document).off();
         setTimeout(function () {
@@ -375,21 +376,30 @@ $(".question").click(function () {
             });
         }, 5000)
     }
-    acceptBuzzer = false;
     }
 
     function showBotAnswer(){
-        newDiv.append($("<p>").attr("id", "botAnswer").html(botWrongAnswer));
+        $.ajax({
+            method: "GET",
+            url: "http://jservice.io/api/random?count=1"
+        }).then(function (response) {
+            var randomInt = Math.floor(Math.random() * response.length);
+            botWrongAnswer = response[randomInt].answer;
+            newDiv.append($("<p>").attr("id", "botAnswer").html(botWrongAnswer));
+            botWrong++;
+        });
         setTimeout(function(){
             newDiv.append($("<p>").attr("id", "currentAnswer").html("Answer: " + currentAnswer));
         }, 1000)
         speakLine("The correct answer is " + currentAnswer)
     }
     function botBuzz() {
-        var botTime1 = Math.floor(Math.random() * 10000 + 7000)
-        var botTime2 = Math.floor(Math.random() * 10000 + 7000)
+        if (acceptBuzzer) {
+        botTime1 = Math.floor(Math.random() * 10000 + 7000)
+        botTime2 = Math.floor(Math.random() * 10000 + 7000)
         setTimeout(botAnswer1, botTime1)
         setTimeout(botAnswer2, botTime2)
+        }
     }
 });
 
