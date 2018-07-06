@@ -17,7 +17,6 @@ var currentQuestion = "";
 var currentAnswer = "";
 var guessedAnswer = "";
 var questionsSeen = 0;
-var botWrong = 0;
 var botTime1, botTime2;
 
 ////////////////////////////////////////////////
@@ -86,6 +85,7 @@ var apiCaller = function (i, j, catId) {
 
     })
 }
+
 
 var populateCategories = function () {
     for (var i = 0; i < categories.length; i++) {
@@ -257,10 +257,10 @@ $(".question").click(function () {
     console.log(currentAnswer);
     $("body").prepend(newDiv);
     newDiv.slideDown(750, "swing");
-    var counter = 20;
+    var counter = 10;
     var counterText = $("<p>").text(counter);
     newDiv.append(counterText);
-    botBuzz();
+    // botBuzz();
     var interval = setInterval(function () {
         counterText.text(--counter);
         if (counter === 0) {
@@ -339,6 +339,7 @@ $(".question").click(function () {
         $("#instruction").text("Wait for answer");
         acceptBuzzer = false;
         $("#scoreBot1 .card-header").addClass("buzzed");
+        acceptBuzzer = false;
         $(document).off();
         setTimeout(function () {
             showBotAnswer();
@@ -392,8 +393,20 @@ $(".question").click(function () {
             newDiv.append($("<p>").attr("id", "currentAnswer").html("Answer: " + currentAnswer));
         }, 1000)
         speakLine("The correct answer is " + currentAnswer)
+=======
     }
+
+    function botAnswer2() {
+        clearInterval(interval);
+        counterText.remove();
+        $("#instruction").text("Wait for answer");
+        $("#scoreBot2 .card-header").addClass("buzzed");
+        acceptBuzzer = false;
+        $(document).off();
+    }
+
     function botBuzz() {
+
         if (acceptBuzzer) {
         botTime1 = Math.floor(Math.random() * 10000 + 7000)
         botTime2 = Math.floor(Math.random() * 10000 + 7000)
