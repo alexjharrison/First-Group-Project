@@ -333,7 +333,7 @@ $(".question").click(function () {
 
     });
     function botAnswer1() {
-        botBuzzedIn = true;
+        if (acceptBuzzer){
         clearInterval(interval);
         counterText.remove();
         $("#instruction").text("Wait for answer");
@@ -347,18 +347,49 @@ $(".question").click(function () {
                 newDiv.remove()
                 $("#scoreBot1 .card-header").removeClass("buzzed");
                 $("#instruction").text("Select another question.");
-                $("#botScore1").text(-thisScore)
+                bot1Score -= thisScore;
+                $("#botScore1").text(bot1Score)
             });
         }, 5000)
-        
+    }
+    acceptBuzzer = false;
+    }
+
+    function botAnswer2() {
+        if (acceptBuzzer){
+        clearInterval(interval);
+        counterText.remove();
+        $("#instruction").text("Wait for answer");
+        $("#scoreBot2 .card-header").addClass("buzzed");
+        $(document).off();
+        setTimeout(function () {
+            showBotAnswer();
+        }, 3000)
+        setTimeout(function () {
+            newDiv.slideUp(750, "swing", function () {
+                newDiv.remove()
+                $("#scoreBot2 .card-header").removeClass("buzzed");
+                $("#instruction").text("Select another question.");
+                bot2Score -= thisScore;
+                $("#botScore2").text(bot2Score)
+            });
+        }, 5000)
+    }
+    acceptBuzzer = false;
     }
 
     function showBotAnswer(){
         newDiv.append($("<p>").attr("id", "botAnswer").html(botWrongAnswer));
+        setTimeout(function(){
+            newDiv.append($("<p>").attr("id", "currentAnswer").html("Answer: " + currentAnswer));
+        }, 1000)
+        speakLine("The correct answer is " + currentAnswer)
     }
     function botBuzz() {
         var botTime1 = Math.floor(Math.random() * 10000 + 7000)
+        var botTime2 = Math.floor(Math.random() * 10000 + 7000)
         setTimeout(botAnswer1, botTime1)
+        setTimeout(botAnswer2, botTime2)
     }
 });
 
